@@ -6,7 +6,7 @@
 [![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
 [![Express.js](https://img.shields.io/badge/Express.js-4.18-lightgrey)](https://expressjs.com/)
 
-![Compliance Management Dashboard](file:///C:/Users/manoj/.gemini/antigravity/brain/5f5ea2fb-31af-4e51-9bfb-26740a27631b/admin_dashboard_metrics_1774245200345.png)
+![Compliance Management Dashboard](assets/dashboard.png)
 
 ## 📌 Overview
 
@@ -28,26 +28,26 @@ A comprehensive full-stack web application designed to streamline compliance man
 ## 📸 Screenshots
 
 ### 🖥️ Admin Command Center
-![Dashboard Screenshot](file:///C:/Users/manoj/.gemini/antigravity/brain/5f5ea2fb-31af-4e51-9bfb-26740a27631b/admin_dashboard_metrics_1774245200345.png)
+![Dashboard Screenshot](assets/dashboard.png)
 
 ### 📋 Mission Directives (Kanban Board)
-![Kanban Board](file:///C:/Users/manoj/.gemini/antigravity/brain/5f5ea2fb-31af-4e51-9bfb-26740a27631b/tasks_kanban_board_top_1774245236009.png)
+![Kanban Board](assets/kanban.png)
 
 ### 📊 Intelligence Feed (Analytics)
-![Analytics](file:///C:/Users/manoj/.gemini/antigravity/brain/5f5ea2fb-31af-4e51-9bfb-26740a27631b/admin_analytics_charts_1774245207468.png)
+![Analytics](assets/analytics.png)
 
 ## 🎬 System in Action (Animations)
 
 The Nexus Core Compliance OS v2.0 is designed for a fluid, animated experience.
 
 ### 🌓 Theme Intelligence
-![Theme Toggle Animation](file:///C:/Users/manoj/.gemini/antigravity/brain/5f5ea2fb-31af-4e51-9bfb-26740a27631b/nexus_v2_theme_and_charts_1774245934125.webp)
+![Theme Toggle Animation](assets/demo.webp)
 
 ### 📈 Dynamic Analytics Load
-![Analytics Animation](file:///C:/Users/manoj/.gemini/antigravity/brain/5f5ea2fb-31af-4e51-9bfb-26740a27631b/nexus_v2_theme_and_charts_1774245934125.webp)
+![Analytics Animation](assets/demo.webp)
 
 ### 🧩 Interactive Flow
-![Interactive Flow](file:///C:/Users/manoj/.gemini/antigravity/brain/5f5ea2fb-31af-4e51-9bfb-26740a27631b/interactive_flow_mockup_png_1774246502610.png)
+![Interactive Flow](assets/flow.png)
 
 *The system orchestrates complex compliance data with seamless, real-time animations.*
 
@@ -136,6 +136,22 @@ cd compliance-management
 
 ---
 
+## 🛠️ Technical Core
+
+### 🔐 Security & Identity
+- **JWT Authentication**: Secure token-based auth with automatic **Refresh Token** rotation.
+- **RBAC (Role-Based Access Control)**: Granular permissions for Admin, Supervisor, and Employee roles.
+- **Session Management**: Multi-device logout support and security-hardened middleware.
+
+### 🧠 Intelligence Engine
+- **Compliance Scoring**: Real-time calculation of organizational compliance based on task approvals.
+- **Aggregate Analytics**: High-performance MongoDB aggregation for department-level metrics.
+- **Trend Analysis**: Statistical tracking of compliance health over 30-day windows.
+
+### 🛡️ Data Integrity
+- **Audit Guardians**: Comprehensive activity logging for every sensitive operation.
+- **Evidence Vault**: Secure storage and mapping of evidentiary documents to compliance tasks.
+
 ## 🏗️ System Architecture
 
 The system follows a modern MERN-stack architecture with a focus on security and scalability.
@@ -166,6 +182,15 @@ graph TD
     Middleware --> DB
     API --> Storage
 ```
+
+---
+
+## 🚦 Core Workflows
+
+1. **Strategic Planning**: Admins define regulations and map them to actionable "Missions".
+2. **Directive Execution**: Employees complete "Directives" and upload verifiable evidence.
+3. **Audit Verification**: Supervisors review evidence and approve/reject directives in real-time.
+4. **Intelligence Reporting**: System aggregates data for live compliance health scores.
 
 ## 🏗️ Project Structure
 
