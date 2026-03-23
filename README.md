@@ -1,16 +1,21 @@
-# 📋 Compliance Management System
+# 📋 Nexus Core: Compliance Management OS
+
+> **Orchestrating Organizational Compliance with Precision.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-4.4%2B-green)](https://www.mongodb.com/)
-[![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-4.18-lightgrey)](https://expressjs.com/)
+[![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D14.0.0-brightgreen)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB-449345)](https://www.mongodb.com/)
+[![React](https://img.shields.io/badge/Frontend-React%2018-61DAFB)](https://reactjs.org/)
+[![Express.js](https://img.shields.io/badge/Backend-Express.js-000000)](https://expressjs.com/)
+[![Aesthetic](https://img.shields.io/badge/UI/UX-Premium%20Dark-blueviolet)](#-screenshots)
+
+---
 
 ![Compliance Management Dashboard](assets/dashboard.png)
 
 ## 📌 Overview
 
-A comprehensive full-stack web application designed to streamline compliance management within organizations. This system enables tracking regulations, managing tasks, conducting audits, generating reports, and ensuring regulatory adherence through an intuitive user interface and robust backend API.
+**Nexus Core** is a sophisticated full-stack compliance ecosystem designed to centralize and automate regulatory governance. By bridging the gap between legal requirements and actionable tasks, Nexus Core ensures that your organization remains audit-ready and secure through real-time intelligence and animated data visualization.
 
 ## 🗺️ Table of Contents
 
@@ -185,6 +190,27 @@ graph TD
 
 ---
 
+## 🚀 API Reference (Enterprise core)
+
+| Category | Endpoint | Method | Access | Description |
+|---|---|---|---|---|
+| **Auth** | `/api/auth/login` | `POST` | Public | Authenticate and obtain JWT |
+| **Auth** | `/api/auth/me` | `GET` | Private | Retrieve user identity profile |
+| **Directives** | `/api/tasks` | `GET` | Private | Fetch scoped compliance tasks |
+| **Directives** | `/api/tasks` | `POST` | Admin+ | Instantiate new compliance mission |
+| **Intelligence** | `/api/analytics/overview` | `GET` | Admin | Real-time dashboard telemetry |
+| **Intelligence** | `/api/analytics/trend` | `GET` | Admin | 30-day compliance health vector |
+
+## 🧩 Component Deep-Dive
+
+### ⚡ Nexus Layout Engine
+Located in `client/src/components/Layout.jsx`, this core component manages the global state of the "Nexus Core" UI, including the **Dark/Light Mode** synchronization and the responsive **Liquid Sidebar** navigation.
+
+### 🧪 Analytics Processor
+The `analyticsController.js` on the backend utilizes high-performance **MongoDB Aggregation Pipelines** to crunch compliance data across departments in milliseconds.
+
+---
+
 ## 🚦 Core Workflows
 
 1. **Strategic Planning**: Admins define regulations and map them to actionable "Missions".
@@ -226,6 +252,9 @@ compliance_management/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## 🆘 Support
 
-For support, email support@compliance-management.com or create an issue in the repository.
+For technical assistance or enterprise inquiries, please contact:
+[**manojmahi9626@gmail.com**](mailto:manojmahi9626@gmail.com)
+
+*Or create a formal issue in the GitHub repository.*
