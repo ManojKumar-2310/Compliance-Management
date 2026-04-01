@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "69c3f517c0b9069133bcbd74"
+  },
+  "missionObjective": "Quarterly Audit Review",
+  "tacticalIntelligence": "Verify data consistency across all systems.",
+  "protocol": "GDPR-2024",
+  "assignedSpecialist": {
+    "name": "Jane Auditor",
+    "role": "Auditor"
+  },
+  "threatLevel": "Medium",
+  "missionStatus": "In Progress",
+  "deadline": {
+    "$date": "2026-04-01T14:45:43.856Z"
+  },
+  "createdAt": {
+    "$date": "2026-03-25T14:45:43.859Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-25T14:45:43.859Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c3f517c0b9069133bcbd76"
+  },
+  "missionObjective": "Security Patching",
+  "tacticalIntelligence": "Apply critical patches to production servers.",
+  "protocol": "ISO-27001",
+  "assignedSpecialist": {
+    "name": "IT Specialist",
+    "role": "Employee"
+  },
+  "threatLevel": "High",
+  "missionStatus": "Completed",
+  "deadline": {
+    "$date": "2026-03-24T14:45:43.863Z"
+  },
+  "createdAt": {
+    "$date": "2026-03-25T14:45:43.863Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-25T14:45:43.863Z"
+  },
+  "__v": 0
+}]

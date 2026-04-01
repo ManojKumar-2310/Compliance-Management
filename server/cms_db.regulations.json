@@ -1,0 +1,132 @@
+[{
+  "_id": {
+    "$oid": "69c744714b57fcb42c1b9796"
+  },
+  "title": "Data handling",
+  "description": "ensure data handling",
+  "category": "Network Security",
+  "effectiveDate": {
+    "$date": "2026-03-28T00:00:00.000Z"
+  },
+  "createdBy": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "versions": [],
+  "createdAt": {
+    "$date": "2026-03-28T03:01:05.186Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-28T03:01:05.186Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c7d5fff5dc140ef7a02925"
+  },
+  "title": "ebebebebe",
+  "description": " hedkebkeb",
+  "category": "Data Privacy",
+  "effectiveDate": {
+    "$date": "2026-03-29T00:00:00.000Z"
+  },
+  "createdBy": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "versions": [],
+  "createdAt": {
+    "$date": "2026-03-28T13:22:07.833Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-28T13:22:07.833Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c93a564998f421b94fced5"
+  },
+  "title": "hhebdbd",
+  "description": "wwdjd wjd j",
+  "category": "Technical Standards",
+  "effectiveDate": {
+    "$date": "2026-03-30T00:00:00.000Z"
+  },
+  "createdBy": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "versions": [],
+  "createdAt": {
+    "$date": "2026-03-29T14:42:30.421Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-29T14:42:30.421Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c942e7fd90e96ef6cfbc17"
+  },
+  "title": "aaaa",
+  "description": "bbbb",
+  "category": "HR Compliance",
+  "effectiveDate": {
+    "$date": "2026-03-31T00:00:00.000Z"
+  },
+  "createdBy": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "versions": [],
+  "createdAt": {
+    "$date": "2026-03-29T15:19:03.564Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-29T15:19:03.564Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c9ff5e5554c4977013c146"
+  },
+  "title": "cccccc",
+  "description": "dddddd",
+  "category": "Safety & Health",
+  "effectiveDate": {
+    "$date": "2026-04-01T00:00:00.000Z"
+  },
+  "createdBy": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "versions": [],
+  "createdAt": {
+    "$date": "2026-03-30T04:43:10.786Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-30T04:43:10.786Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cb9f4d734cd8f37ebe5150"
+  },
+  "title": "wwwwwwww",
+  "description": "thththt",
+  "category": "Technical Standards",
+  "effectiveDate": {
+    "$date": "2026-04-10T00:00:00.000Z"
+  },
+  "createdBy": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "versions": [],
+  "createdAt": {
+    "$date": "2026-03-31T10:17:49.312Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-31T10:17:49.312Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,418 @@
+[{
+  "_id": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "name": "Manoj Compliance Officer",
+  "email": "manoj@123",
+  "password": "$2b$10$J56y0mrI54QBQKxrbkGajeIRlgZ69B1/htNUSgC91c7RpQX.rll.m",
+  "role": "Admin",
+  "department": "Information Technology (IT)",
+  "designation": "Compliance Officer",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.081Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.081Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99ca7"
+  },
+  "name": "Jane Auditor",
+  "email": "auditor@123",
+  "password": "$2b$10$0h6gSjd0b.U.74dYjOBMkeGNdpkFKopHEZ12FfcvuClOMtqQe40zm",
+  "role": "Auditor",
+  "department": "Legal",
+  "designation": "Internal Auditor",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.252Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.252Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99ca9"
+  },
+  "name": "Aruna",
+  "email": "aruna@123",
+  "password": "$2b$10$EKCtitDc6c9dknbXmHi1uuFfcTs7VEfplxwmc8W1U8PQyhp7dy3Iy",
+  "role": "Employee",
+  "department": "Healthcare / Medical",
+  "designation": "Chief Medical Officer",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.392Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.392Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99cab"
+  },
+  "name": "James",
+  "email": "james@123",
+  "password": "$2b$10$SgSMTQ2lMN6.WtG2c7Q1i.d2EolPtJDfDjSUpwzTGipU9pZbaKeaW",
+  "role": "Employee",
+  "department": "Healthcare / Medical",
+  "designation": "Medical Compliance Lead",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.538Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.538Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99cad"
+  },
+  "name": "Davika",
+  "email": "davika@123",
+  "password": "$2b$10$WMJH2PFm47t4HcFSYJNFWO.cETNttkIIPSmSLstD590lCA4T.bodG",
+  "role": "Employee",
+  "department": "Education",
+  "designation": "Academic Dean",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.683Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.683Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99caf"
+  },
+  "name": "Michael",
+  "email": "michael@123",
+  "password": "$2b$10$LI3TLjnzPxqXWxCFQoZdrOQJIjeyF5YbHwRuBNdMtoYygnX.l0SQm",
+  "role": "Employee",
+  "department": "Education",
+  "designation": "Registrar",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.825Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.825Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99cb1"
+  },
+  "name": "Sarah",
+  "email": "sarah@123",
+  "password": "$2b$10$71FtvsXk20TGA32ocm8TvuTt9wfFOgnpEcg7.yQSXcNxbatTG7s6S",
+  "role": "Employee",
+  "department": "Banking",
+  "designation": "Risk Compliance Manager",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.978Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.978Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605742d91443266c99cb3"
+  },
+  "name": "David",
+  "email": "david@123",
+  "password": "$2b$10$h0aHx9ItSTcdkKfzFV8L9OZ2ohrik75kOPjnPxUrcAet5n8rpFHy6",
+  "role": "Employee",
+  "department": "Banking",
+  "designation": "AML Specialist",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:04.118Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:04.118Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605742d91443266c99cb5"
+  },
+  "name": "Robert",
+  "email": "robert@123",
+  "password": "$2b$10$x5464Dr5XyRM2l1DUPxTxO5jxrfLa4DoE3vtWoVTbDm4S9Prt/zsO",
+  "role": "Employee",
+  "department": "Finance",
+  "designation": "Financial Auditor",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:04.259Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:04.259Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605742d91443266c99cb7"
+  },
+  "name": "Emily",
+  "email": "emily@123",
+  "password": "$2b$10$oOeTSAqTuBtig6XZqwYIGuPUKsF4LUhqRJERa/1b12je/YK5nbh.K",
+  "role": "Employee",
+  "department": "Finance",
+  "designation": "Investment Compliance Officer",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:04.399Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:04.399Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605742d91443266c99cb9"
+  },
+  "name": "Kevin",
+  "email": "kevin@123",
+  "password": "$2b$10$h73ZAeKlp5AEqpIp44f/1uoJuGwQ5UeAHt.cbI67afFndVfzIURiS",
+  "role": "Employee",
+  "department": "Insurance",
+  "designation": "Claims Regulatory Analyst",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:04.540Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:04.540Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605742d91443266c99cbb"
+  },
+  "name": "Chen",
+  "email": "chen@123",
+  "password": "$2b$10$mVqGr2D2piGMjJe05QM98uBwU/pkYV0TOwmwEQ9evM1Y8C2tHYhSC",
+  "role": "Employee",
+  "department": "Insurance",
+  "designation": "Insurance Policy Auditor",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:04.680Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:04.680Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605742d91443266c99cbd"
+  },
+  "name": "Ajith",
+  "email": "ajith@123",
+  "password": "$2b$10$ycQkUnLVKeMyDH2sQLevJOIzahFTD/TN5g4ODXtDCSun4YXpEq8Gi",
+  "role": "Employee",
+  "department": "Information Technology (IT)",
+  "designation": "Cloud Architect",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:04.823Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:04.823Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605742d91443266c99cbf"
+  },
+  "name": "Rahul",
+  "email": "rahul@123",
+  "password": "$2b$10$FyixM8bDcMwqwR68iT2g4O5T4or66IbrGaSjgUsVflcz1psRgm7Sm",
+  "role": "Employee",
+  "department": "Information Technology (IT)",
+  "designation": "DevOps Engineer",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:04.967Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:04.967Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605752d91443266c99cc1"
+  },
+  "name": "Manoj",
+  "email": "manoj.soft@123",
+  "password": "$2b$10$bo3ex7kfKJpOa1.22KgShOvo.oc8H/uX.AsyDFwVEECaObM38l4z2",
+  "role": "Employee",
+  "department": "Software Companies",
+  "designation": "Senior Software Engineer",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:05.109Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:05.109Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605752d91443266c99cc3"
+  },
+  "name": "Naveen",
+  "email": "naveen@123",
+  "password": "$2b$10$TIO1G6BKSHAZZXB/mCs83OywyPDAO7UlSQpNYGuDrxERXrzQuSJGe",
+  "role": "Employee",
+  "department": "Software Companies",
+  "designation": "Site Reliability Engineer",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:05.249Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:05.249Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605752d91443266c99cc5"
+  },
+  "name": "Arjun",
+  "email": "arjun@123",
+  "password": "$2b$10$RNDnOXVu.d3ilCEM.GlOJO4zqGYFgogdPxJuqfIYsWZbR76GljqBu",
+  "role": "Employee",
+  "department": "Manufacturing",
+  "designation": "Plant Manager",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:05.391Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:05.391Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605752d91443266c99cc7"
+  },
+  "name": "Priya",
+  "email": "priya@123",
+  "password": "$2b$10$obHuz2EhRGXrthDYRoMjS.8aWxk6RpApbUMCny/YThCCdg6nCGTES",
+  "role": "Employee",
+  "department": "Manufacturing",
+  "designation": "Quality Assurance Lead",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:05.540Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:05.540Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605752d91443266c99cc9"
+  },
+  "name": "Gupta",
+  "email": "gupta@123",
+  "password": "$2b$10$lFn0rI.YhUxFGNY58OO7RetnpHSgHH3rFewh9rnIpFVCrA8Zzm36G",
+  "role": "Employee",
+  "department": "Pharmaceutical",
+  "designation": "Biotech Compliance Officer",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:05.680Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:05.680Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605752d91443266c99ccb"
+  },
+  "name": "Sneha",
+  "email": "sneha@123",
+  "password": "$2b$10$pZ6n2Hlhug2kGkj1SkMC4OBavZiQ4DFhs10dHRDeyDzX9iVCl8LSS",
+  "role": "Employee",
+  "department": "Pharmaceutical",
+  "designation": "Clinical Trial Auditor",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:05.823Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:05.823Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605752d91443266c99ccd"
+  },
+  "name": "Miller",
+  "email": "miller@123",
+  "password": "$2b$10$a86Gt3b1vipw8kfEIWryyulYmo1Yb77C1QXcXdYG1w6fslGIYTv.G",
+  "role": "Employee",
+  "department": "Construction",
+  "designation": "Safety & Ethics Inspector",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:05.966Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:05.966Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c605762d91443266c99ccf"
+  },
+  "name": "Jane",
+  "email": "jane@123",
+  "password": "$2b$10$8i4zTxdBb1bzB5v8nTv2AuZSGv/cBEvmL6JHcrXWllKoPvD9Hc0Ey",
+  "role": "Employee",
+  "department": "Construction",
+  "designation": "Structural Regulatory Lead",
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:06.108Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:06.108Z"
+  },
+  "__v": 0
+}]

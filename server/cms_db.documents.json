@@ -1,0 +1,168 @@
+[{
+  "_id": {
+    "$oid": "69c3a32486a80bf01f30c71b"
+  },
+  "originalName": "Thalapathy Kacheri Wallpaper 4K.jpg",
+  "fileName": "file-1774428964150.jpg",
+  "mimeType": "image/jpeg",
+  "size": 215973,
+  "path": "uploads\\file-1774428964150.jpg",
+  "uploadedBy": {
+    "$oid": "69c3a1316081e6a9378a1410"
+  },
+  "relatedEntity": "Task",
+  "relatedId": {
+    "$oid": "69c3a29286a80bf01f30c682"
+  },
+  "createdAt": {
+    "$date": "2026-03-25T08:56:04.179Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-25T08:56:04.179Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c68b0ae7a1b68267a4ff3d"
+  },
+  "originalName": "mukesh sign.jpeg",
+  "fileName": "file-1774619402916.jpeg",
+  "mimeType": "image/jpeg",
+  "size": 20909,
+  "path": "uploads\\file-1774619402916.jpeg",
+  "uploadedBy": {
+    "$oid": "69c605732d91443266c99ca7"
+  },
+  "relatedEntity": "Task",
+  "relatedId": {
+    "$oid": "69c688cbe7a1b68267a4fcc2"
+  },
+  "createdAt": {
+    "$date": "2026-03-27T13:50:02.922Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T13:50:02.922Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c745214b57fcb42c1b9897"
+  },
+  "originalName": "mukesh sign.jpeg",
+  "fileName": "file-1774667041594.jpeg",
+  "mimeType": "image/jpeg",
+  "size": 20909,
+  "path": "uploads\\file-1774667041594.jpeg",
+  "uploadedBy": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "relatedEntity": "Task",
+  "relatedId": {
+    "$oid": "69c744b54b57fcb42c1b97f2"
+  },
+  "createdAt": {
+    "$date": "2026-03-28T03:04:01.628Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-28T03:04:01.628Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c7d8c63f733c4922fd61e1"
+  },
+  "originalName": "Manoj kumar resume.pdf",
+  "fileName": "file-1774704838643.pdf",
+  "mimeType": "application/pdf",
+  "size": 134571,
+  "path": "uploads\\file-1774704838643.pdf",
+  "uploadedBy": {
+    "$oid": "69c605732d91443266c99ca5"
+  },
+  "relatedEntity": "Task",
+  "relatedId": {
+    "$oid": "69c7d632f5dc140ef7a02949"
+  },
+  "createdAt": {
+    "$date": "2026-03-28T13:33:58.668Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-28T13:33:58.668Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c93b334998f421b94fd020"
+  },
+  "originalName": "Manoj kumar resume.pdf",
+  "fileName": "file-1774795571525.pdf",
+  "mimeType": "application/pdf",
+  "size": 134571,
+  "path": "uploads\\file-1774795571525.pdf",
+  "uploadedBy": {
+    "$oid": "69c605742d91443266c99cbf"
+  },
+  "relatedEntity": "Task",
+  "relatedId": {
+    "$oid": "69c93aaa4998f421b94fcf43"
+  },
+  "createdAt": {
+    "$date": "2026-03-29T14:46:11.543Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-29T14:46:11.543Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c9fff45554c4977013c1cc"
+  },
+  "originalName": "Manoj kumar resume.pdf",
+  "fileName": "file-1774845940269.pdf",
+  "mimeType": "application/pdf",
+  "size": 134571,
+  "path": "uploads\\file-1774845940269.pdf",
+  "uploadedBy": {
+    "$oid": "69c605752d91443266c99cc7"
+  },
+  "relatedEntity": "Task",
+  "relatedId": {
+    "$oid": "69c9ffa55554c4977013c16c"
+  },
+  "createdAt": {
+    "$date": "2026-03-30T04:45:40.285Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-30T04:45:40.285Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69cb9fb2734cd8f37ebe51e2"
+  },
+  "originalName": "Bonafide Certificate Page.pdf",
+  "fileName": "file-1774952370363.pdf",
+  "mimeType": "application/pdf",
+  "size": 588259,
+  "path": "uploads\\file-1774952370363.pdf",
+  "uploadedBy": {
+    "$oid": "69c605742d91443266c99cb3"
+  },
+  "relatedEntity": "Task",
+  "relatedId": {
+    "$oid": "69cb9f71734cd8f37ebe5176"
+  },
+  "createdAt": {
+    "$date": "2026-03-31T10:19:30.395Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-31T10:19:30.395Z"
+  },
+  "__v": 0
+}]

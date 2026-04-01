@@ -1,0 +1,160 @@
+[{
+  "_id": {
+    "$oid": "69c605732d91443266c99c9a"
+  },
+  "name": "Healthcare / Medical",
+  "description": "Medical and hospital compliance",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.058Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.058Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99c9b"
+  },
+  "name": "Education",
+  "description": "Academic and research standards",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99c9c"
+  },
+  "name": "Banking",
+  "description": "Banking and financial operations",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99c9d"
+  },
+  "name": "Finance",
+  "description": "Finance and accounting compliance",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99c9e"
+  },
+  "name": "Insurance",
+  "description": "Insurance policies and claims regulation",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99c9f"
+  },
+  "name": "Information Technology (IT)",
+  "description": "General IT infrastructure and security",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.062Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99ca0"
+  },
+  "name": "Software Companies",
+  "description": "Software development and engineering standards",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.063Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.063Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99ca1"
+  },
+  "name": "Manufacturing",
+  "description": "Industrial safety and production",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.063Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.063Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99ca2"
+  },
+  "name": "Pharmaceutical",
+  "description": "Clinical trials and drug safety regulations",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.063Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.063Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69c605732d91443266c99ca3"
+  },
+  "name": "Construction",
+  "description": "Building safety and structural regulations",
+  "employees": [],
+  "isActive": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-03-27T04:20:03.063Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-27T04:20:03.063Z"
+  }
+}]
