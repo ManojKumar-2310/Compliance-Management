@@ -17,7 +17,7 @@ const Sidebar = () => {
     // Role-specific dashboard path
     const getDashboardPath = () => {
         if (user?.role === 'Admin') return '/admin/dashboard';
-        if (user?.role === 'Auditor') return '/auditor/dashboard';
+        if (user?.role === 'Auditor') return '/auditor/mission-control';
         if (user?.role === 'Employee') return '/employee/dashboard';
         return '/dashboard';
     };
@@ -25,27 +25,24 @@ const Sidebar = () => {
     // Role-based menu items
     const getMenuItems = () => {
         const commonItems = [
-            { name: 'Mission Control', path: getDashboardPath(), icon: LayoutDashboard },
+            { name: 'Command Center', path: getDashboardPath(), icon: LayoutDashboard },
         ];
 
-        if (user?.role === 'Admin') {
+        if (user?.role === 'Admin' || user?.role === 'Compliance Officer') {
             return [
                 ...commonItems,
                 { name: 'Personnel Grid', path: '/users', icon: Users },
                 { name: 'Protocol Registry', path: '/regulations', icon: BookOpen },
                 { name: 'Directives', path: '/tasks', icon: CheckSquare },
-                { name: 'Verification Logs', path: '/audits', icon: ShieldCheck },
-                { name: 'Risk Matrix', path: '/risks', icon: AlertTriangle },
-                { name: 'Intelligence', path: '/reports', icon: BarChart3 },
+                { name: 'Reports', path: '/reports', icon: BarChart3 },
             ];
         }
 
         if (user?.role === 'Auditor') {
             return [
-                ...commonItems,
-                { name: 'Verification Queue', path: '/auditor/dashboard', icon: ShieldCheck },
-                { name: 'Audit Archive', path: '/audits', icon: FileText },
-                { name: 'Intelligence', path: '/reports', icon: BarChart3 },
+                { name: 'Command Center', path: '/auditor/mission-control', icon: LayoutDashboard },
+                { name: 'Verification Queue', path: '/auditor/verification-queue', icon: ShieldCheck },
+                { name: 'Reports', path: '/reports', icon: BarChart3 },
             ];
         }
 
@@ -54,9 +51,10 @@ const Sidebar = () => {
                 ...commonItems,
                 { name: 'My Directives', path: '/employee-tasks', icon: CheckSquare },
                 { name: 'Protocol Registry', path: '/regulations', icon: BookOpen },
-                { name: 'Intelligence', path: '/reports', icon: BarChart3 },
+                { name: 'Reports', path: '/reports', icon: BarChart3 },
             ];
         }
+
 
         return commonItems;
     };
@@ -161,7 +159,9 @@ const Sidebar = () => {
                                 </div>
                                 <div className="overflow-hidden">
                                     <p className="font-bold text-white text-sm truncate">{user?.name}</p>
-                                    <p className="text-[9px] font-black text-indigo-400 uppercase tracking-[0.1em] truncate">{user?.role}</p>
+                                    <p className="text-[9px] font-black text-indigo-400 uppercase tracking-[0.1em] truncate">
+                                        {user?.role === 'Admin' ? 'Compliance Officer' : user?.role}
+                                    </p>
                                 </div>
                             </div>
 

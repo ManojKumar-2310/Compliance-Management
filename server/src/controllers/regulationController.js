@@ -1,11 +1,18 @@
 const Regulation = require('../models/Regulation');
+const Task = require('../models/Task');
 
 // @desc    Get all regulations
 // @route   GET /api/regulations
 // @access  Private
 const getRegulations = async (req, res) => {
     try {
-        const regulations = await Regulation.find({}).populate('createdBy', 'name');
+        let query = {};
+        if (req.user.role === 'Employee') {
+            const tasks = await Task.find({ assignedTo: req.user._id }).select('regulationId');
+            const regulationIds = tasks.map(t => t.regulationId).filter(id => id != null);
+            query._id = { $in: regulationIds };
+        }
+        const regulations = await Regulation.find(query).populate('createdBy', 'name');
         res.json(regulations);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -19,6 +26,13 @@ const getRegulationById = async (req, res) => {
     try {
         const regulation = await Regulation.findById(req.params.id).populate('createdBy', 'name');
         if (regulation) {
+            // Role check: Employees can only view regulations associated with their tasks
+            if (req.user.role === 'Employee') {
+                const hasTask = await Task.exists({ assignedTo: req.user._id, regulationId: regulation._id });
+                if (!hasTask) {
+                    return res.status(403).json({ message: 'Not authorized to view this regulation' });
+                }
+            }
             res.json(regulation);
         } else {
             res.status(404).json({ message: 'Regulation not found' });

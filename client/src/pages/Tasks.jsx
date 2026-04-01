@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import api from '../api/axios';
-import { Plus, Check, Clock, ShieldAlert, FileText, User, Calendar, AlertTriangle, ArrowRight, LayoutGrid, List } from 'lucide-react';
+import { Plus, Check, Clock, ShieldAlert, FileText, User, Calendar, AlertTriangle, ArrowRight, LayoutGrid, List, Trash2 } from 'lucide-react';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import useAuth from '../hooks/useAuth';
@@ -98,6 +98,17 @@ const Tasks = () => {
         }
     };
 
+    const handleDelete = async (taskId) => {
+        if (!window.confirm('Are you sure you want to decommission this directive? This action is irreversible.')) return;
+        try {
+            await api.delete(`/tasks/${taskId}`);
+            fetchData();
+        } catch (error) {
+            console.error('Error deleting task:', error);
+            alert('Security protocol failure: Could not delete directive');
+        }
+    };
+
     const canCreate = ['Compliance Officer', 'Admin'].includes(user?.role);
 
     if (loading) return (
@@ -153,6 +164,21 @@ const Tasks = () => {
                 {tasks.filter(t => {
                     if (user.role === 'Compliance Officer' || user.role === 'Admin') return true;
                     return t.assignedTo?._id === user._id;
+                }).length === 0 ? (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="col-span-full text-center py-32 bg-slate-50/50 dark:bg-slate-900/30 rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800 shadow-inner"
+                    >
+                        <div className="w-24 h-24 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
+                            <ShieldAlert size={48} className="text-indigo-500" />
+                        </div>
+                        <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tighter">No Active Directives</h3>
+                        <p className="text-slate-500 dark:text-slate-400 font-medium text-lg">Your mission log is currently clear. Initialize a new directive to proceed.</p>
+                    </motion.div>
+                ) : tasks.filter(t => {
+                    if (user.role === 'Compliance Officer' || user.role === 'Admin') return true;
+                    return t.assignedTo?._id === user._id;
                 }).map(task => (
                     <motion.div
                         key={task._id}
@@ -185,6 +211,18 @@ const Tasks = () => {
                                 )}>
                                     {task.status}
                                 </span>
+                                {(user.role === 'Admin' || user.role === 'Compliance Officer') && (
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleDelete(task._id);
+                                        }}
+                                        className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 rounded-xl transition-all"
+                                        title="Delete Directive"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                )}
                             </div>
 
                             <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors uppercase tracking-tight leading-none">

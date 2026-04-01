@@ -16,6 +16,8 @@ const itemVariants = {
     visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
 };
 
+// PROJECT_GROUPS removed
+
 const Users = () => {
     const { user: currentUser } = useAuth();
     const [users, setUsers] = useState([]);
@@ -25,7 +27,8 @@ const Users = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [editingId, setEditingId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [filterRole, setFilterRole] = useState('All');
+    const [roleFilter, setRoleFilter] = useState('All');
+    const roles = ['All', 'Employee', 'Auditor', 'Compliance Officer'];
     const [departments, setDepartments] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -58,11 +61,16 @@ const Users = () => {
         } catch (error) {
             console.error('Error fetching departments:', error);
             setDepartments([
-                { name: 'Human Resources' },
+                { name: 'Healthcare / Medical' },
+                { name: 'Education' },
+                { name: 'Banking' },
                 { name: 'Finance' },
-                { name: 'IT & Security' },
-                { name: 'Legal' },
-                { name: 'Operations' }
+                { name: 'Insurance' },
+                { name: 'Information Technology (IT)' },
+                { name: 'Software Companies' },
+                { name: 'Manufacturing' },
+                { name: 'Pharmaceutical' },
+                { name: 'Construction' }
             ]);
         }
     };
@@ -145,11 +153,10 @@ const Users = () => {
         const matchesSearch = u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
             u.designation?.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesRole = filterRole === 'All' || u.role === filterRole;
+        const matchesRole = roleFilter === 'All' ||
+            (roleFilter === 'Compliance Officer' ? (u.role === 'Compliance Officer' || u.role === 'Admin') : u.role === roleFilter);
         return matchesSearch && matchesRole;
     });
-
-    const roles = ['All', 'Admin', 'Compliance Officer', 'Employee', 'Auditor'];
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50 dark:bg-slate-950 gap-8">
@@ -209,16 +216,16 @@ const Users = () => {
                         )}
                     </div>
 
-                    <div className="flex gap-2 w-full overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+                    <div className="flex gap-2 flex-wrap">
                         {roles.map(role => (
                             <button
                                 key={role}
-                                onClick={() => setFilterRole(role)}
+                                onClick={() => setRoleFilter(role)}
                                 className={clsx(
-                                    "px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap border",
-                                    filterRole === role
-                                        ? "bg-indigo-600 text-white border-indigo-600 shadow-md transform scale-105"
-                                        : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500"
+                                    'px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] border transition-all',
+                                    roleFilter === role
+                                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-500/30'
+                                        : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-indigo-400 hover:text-indigo-500'
                                 )}
                             >
                                 {role}
@@ -228,13 +235,8 @@ const Users = () => {
                 </div>
             </motion.header>
 
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6"
-            >
-                <AnimatePresence>
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+                <AnimatePresence mode="popLayout">
                     {filteredUsers.map((u) => (
                         <motion.div
                             key={u._id}
@@ -278,12 +280,16 @@ const Users = () => {
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <h3 className="text-lg font-black text-slate-900 dark:text-white truncate uppercase tracking-tight">{u.name}</h3>
-                                    <p className="text-xs font-bold text-slate-400 dark:text-slate-500 truncate flex items-center gap-1">
-                                        <Mail size={10} /> {u.email}
-                                    </p>
-                                    <p className="text-[10px] font-black text-indigo-500 uppercase tracking-widest mt-1 truncate">
-                                        {u.designation || 'Specialist'}
-                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="mb-6">
+                                <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Designation</h5>
+                                <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
+                                    <div className="w-8 h-8 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500">
+                                        <Briefcase size={16} />
+                                    </div>
+                                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300">{u.designation || 'Staff'}</span>
                                 </div>
                             </div>
 
@@ -305,7 +311,7 @@ const Users = () => {
                         </motion.div>
                     ))}
                 </AnimatePresence>
-            </motion.div>
+            </div>
 
             {showTasksModal && selectedUser && (
                 <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
@@ -413,6 +419,9 @@ const Users = () => {
                                             value={formData.email}
                                             onChange={handleChange}
                                             required
+                                            readOnly
+                                            onFocus={(e) => e.target.removeAttribute('readonly')}
+                                            autoComplete="new-password"
                                             className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 rounded-[1.5rem] transition-all text-sm font-bold text-slate-900 dark:text-white"
                                             placeholder="sarah@resistance.net"
                                         />
@@ -428,6 +437,9 @@ const Users = () => {
                                             value={formData.password}
                                             onChange={handleChange}
                                             required={!editingId}
+                                            readOnly
+                                            onFocus={(e) => e.target.removeAttribute('readonly')}
+                                            autoComplete="new-password"
                                             className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 rounded-[1.5rem] transition-all text-sm font-bold text-slate-900 dark:text-white"
                                             placeholder={editingId ? "Leave blank to keep current" : "••••••••"}
                                         />
@@ -490,6 +502,9 @@ const Users = () => {
                                             placeholder="e.g. Senior Analyst"
                                         />
                                     </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-6 items-end">
                                     <label className={clsx(
                                         "flex items-center gap-3 cursor-pointer p-4 rounded-[1.5rem] border-2 transition-all h-[58px]",
                                         formData.isActive ? "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 dark:border-emerald-500/50" : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
@@ -510,7 +525,7 @@ const Users = () => {
                                         <span className={clsx(
                                             "text-xs font-black uppercase tracking-wider",
                                             formData.isActive ? "text-emerald-700 dark:text-emerald-400" : "text-slate-400"
-                                        )}>Authorized</span>
+                                        )}>Authorized Access</span>
                                     </label>
                                 </div>
 

@@ -1,6 +1,7 @@
 import { BarChart3, Users, FileText, TrendingUp, AlertCircle, CheckCircle2, Activity } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import api from '../../api/axios';
 import { format } from 'date-fns';
@@ -14,35 +15,50 @@ const AnalyticsDashboard = () => {
         complianceScore: 0
     });
     const [trendData, setTrendData] = useState([]);
-    const [departmentData, setDepartmentData] = useState([]);
     const [activityLog, setActivityLog] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchAllData = async () => {
+        const fetchOverview = async () => {
             try {
-                const [overviewRes, trendRes, departmentRes, activityRes] = await Promise.all([
-                    api.get('/analytics/overview'),
-                    api.get('/analytics/trend?days=30'),
-                    api.get('/analytics/department-stats'),
-                    api.get('/analytics/activity')
-                ]);
-
-                setStats(overviewRes.data.data || {
-                    totalUsers: 0,
-                    activeTasks: 0,
-                    completedTasks: 0,
-                    totalRegulations: 0,
-                    complianceScore: 0
-                });
-                setTrendData(trendRes.data.data || []);
-                setDepartmentData(departmentRes.data.data || []);
-                setActivityLog(activityRes.data.data || []);
+                const { data } = await api.get('/analytics/overview');
+                if (data?.data) {
+                    setStats(data.data);
+                }
             } catch (error) {
-                console.error('Error fetching analytics:', error);
-            } finally {
-                setLoading(false);
+                console.error('Error fetching overview stats:', error);
+                toast.error('Failed to load overview statistics');
             }
+        };
+
+        const fetchTrend = async () => {
+            try {
+                const { data } = await api.get('/analytics/trend?days=30');
+                if (data?.data) {
+                    setTrendData(data.data);
+                }
+            } catch (error) {
+                console.error('Error fetching trend data:', error);
+                toast.error('Failed to load trend data');
+            }
+        };
+
+        const fetchActivity = async () => {
+            try {
+                const { data } = await api.get('/analytics/activity');
+                if (data?.data) {
+                    setActivityLog(data.data);
+                }
+            } catch (error) {
+                console.error('Error fetching activity log:', error);
+                toast.error('Failed to load activity log');
+            }
+        };
+
+        const fetchAllData = async () => {
+            setLoading(true);
+            await Promise.all([fetchOverview(), fetchTrend(), fetchActivity()]);
+            setLoading(false);
         };
 
         fetchAllData();
@@ -59,7 +75,7 @@ const AnalyticsDashboard = () => {
             trendUp: true
         },
         {
-            title: 'Active Tasks',
+            title: 'Active Operations',
             value: stats.activeTasks,
             icon: FileText,
             color: 'bg-indigo-500',
@@ -68,42 +84,50 @@ const AnalyticsDashboard = () => {
             trendUp: true
         },
         {
-            title: 'Completed Tasks',
+            title: 'Completed Operations',
             value: stats.completedTasks,
             icon: CheckCircle2,
             color: 'bg-green-500',
             gradient: 'from-green-500 to-emerald-600',
             trend: '+18%',
             trendUp: true
-        },
-        {
-            title: 'Compliance Score',
-            value: `${stats.complianceScore || 0}%`,
-            icon: TrendingUp,
-            color: 'bg-indigo-500',
-            gradient: 'from-indigo-500 to-purple-600',
-            trend: '+8%',
-            trendUp: true
         }
     ];
 
     if (loading) {
         return (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[...Array(4)].map((_, i) => (
-                    <div key={i} className="bg-card border border-border rounded-xl p-6 animate-pulse">
-                        <div className="h-4 bg-muted rounded w-1/2 mb-4"></div>
-                        <div className="h-8 bg-muted rounded w-3/4"></div>
-                    </div>
-                ))}
+            <div className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="bg-slate-900/40 border border-slate-800 rounded-3xl p-8 animate-pulse">
+                            <div className="h-4 bg-slate-800 rounded w-1/2 mb-4"></div>
+                            <div className="h-10 bg-slate-800 rounded w-3/4"></div>
+                        </div>
+                    ))}
+                </div>
+                <div className="bg-slate-900/40 border border-slate-800 rounded-[3rem] p-10 h-[500px] animate-pulse">
+                    <div className="h-6 bg-slate-800 rounded w-1/4 mb-4"></div>
+                </div>
             </div>
         );
     }
 
+    const CustomTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="bg-[#0f172a] border border-slate-800 p-4 rounded-2xl shadow-2xl backdrop-blur-xl">
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{label}</p>
+                    <p className="text-xl font-black text-white">{payload[0].value}% <span className="text-[10px] text-emerald-400">Score</span></p>
+                </div>
+            );
+        }
+        return null;
+    };
+
     return (
         <div className="space-y-8">
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {statCards.map((stat, index) => (
                     <motion.div
                         key={index}
@@ -133,147 +157,76 @@ const AnalyticsDashboard = () => {
                 ))}
             </div>
 
-            {/* Charts Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Compliance Trend Chart */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="bg-slate-900/40 backdrop-blur-xl border border-slate-800 rounded-3xl p-8"
-                >
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-                            <TrendingUp className="text-indigo-400" size={24} />
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-black uppercase tracking-widest text-white">Compliance Trend</h3>
-                            <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">30 Day Overview</p>
-                        </div>
-                    </div>
-                    <div className="h-[300px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={trendData}>
-                                <defs>
-                                    <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
-                                    </linearGradient>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-                                <XAxis
-                                    dataKey="date"
-                                    stroke="#94a3b8"
-                                    tick={{ fontSize: 10, fill: '#94a3b8' }}
-                                    tickFormatter={(str) => format(new Date(str), 'MMM d')}
-                                />
-                                <YAxis stroke="#94a3b8" tick={{ fontSize: 10, fill: '#94a3b8' }} />
-                                <Tooltip
-                                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '1rem', color: '#fff' }}
-                                    itemStyle={{ color: '#818cf8' }}
-                                    labelStyle={{ color: '#94a3b8', marginBottom: '0.5rem' }}
-                                    labelFormatter={(label) => format(new Date(label), 'MMM d, yyyy')}
-                                />
-                                <Area
-                                    type="monotone"
-                                    dataKey="score"
-                                    stroke="#818cf8"
-                                    strokeWidth={3}
-                                    fillOpacity={1}
-                                    fill="url(#colorScore)"
-                                />
-                            </AreaChart>
-                        </ResponsiveContainer>
-                    </div>
-                </motion.div>
-
-                {/* Department Performance */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="bg-slate-900/40 backdrop-blur-xl border border-slate-800 rounded-3xl p-8"
-                >
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
-                            <BarChart3 className="text-blue-400" size={24} />
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-black uppercase tracking-widest text-white">Department Performance</h3>
-                            <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Task Completion Rates</p>
-                        </div>
-                    </div>
-                    <div className="h-[300px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={departmentData} layout="vertical">
-                                <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={true} vertical={false} />
-                                <XAxis type="number" stroke="#94a3b8" tick={{ fontSize: 10, fill: '#94a3b8' }} hide />
-                                <YAxis
-                                    dataKey="department"
-                                    type="category"
-                                    stroke="#94a3b8"
-                                    width={100}
-                                    tick={{ fontSize: 10, fill: '#94a3b8', fontWeight: 'bold' }}
-                                />
-                                <Tooltip
-                                    cursor={{ fill: '#334155', opacity: 0.2 }}
-                                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '1rem', color: '#fff' }}
-                                />
-                                <Bar dataKey="completionRate" fill="#3b82f6" radius={[0, 4, 4, 0]} barSize={20}>
-                                    {departmentData.map((entry, index) => (
-                                        <cell key={`cell-${index}`} fill={['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b'][index % 5]} />
-                                    ))}
-                                </Bar>
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                </motion.div>
-            </div>
-
-            {/* Recent Activity */}
+            {/* Main Analytics Graph */}
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="bg-slate-900/40 backdrop-blur-xl border border-slate-800 rounded-3xl p-8"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className="bg-slate-900/40 backdrop-blur-3xl p-10 rounded-[3rem] border border-slate-800 shadow-2xl relative overflow-hidden"
             >
-                <div className="flex items-center gap-4 mb-8">
-                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                        <Activity className="text-purple-400" size={24} />
+                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-[80px] pointer-events-none" />
+
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 relative z-10">
+                    <div>
+                        <div className="flex items-center gap-3 mb-2">
+                            <Activity className="text-blue-400" size={24} />
+                            <h3 className="text-2xl font-black text-white uppercase tracking-tighter">Security Compliance Trend</h3>
+                        </div>
+                        <p className="text-slate-400 font-medium tracking-tight">Real-time optimization matrix monitoring network performance</p>
                     </div>
-                    <h3 className="text-xl font-black uppercase tracking-widest text-white">Live Intelligence Feed</h3>
+
+                    <div className="flex items-center gap-8">
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Average Score</p>
+                            <p className="text-2xl font-black text-white">{stats.complianceScore}%</p>
+                        </div>
+                        <div className="h-10 w-px bg-slate-800" />
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Growth Rate</p>
+                            <p className="text-2xl font-black text-emerald-400">+12.4%</p>
+                        </div>
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {activityLog.length === 0 ? (
-                        <div className="col-span-full text-center py-8 text-slate-500 font-medium">No recent activity detected.</div>
-                    ) : (
-                        activityLog.map((log, idx) => (
-                            <motion.div
-                                key={log._id || idx}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.1 * idx }}
-                                className="bg-slate-800/30 border border-slate-700/50 rounded-2xl p-4 flex items-start gap-3 hover:bg-slate-800/60 transition-colors"
-                            >
-                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 
-                                    ${log.action.includes('CREATE') ? 'bg-emerald-500/20 text-emerald-400' :
-                                        log.action.includes('DELETE') ? 'bg-rose-500/20 text-rose-400' :
-                                            log.action.includes('UPDATE') ? 'bg-blue-500/20 text-blue-400' :
-                                                'bg-slate-700 text-slate-400'}`}
-                                >
-                                    <FileText size={14} />
-                                </div>
-                                <div className="min-w-0">
-                                    <p className="text-xs font-bold text-slate-200 truncate">{log.details || log.action}</p>
-                                    <div className="flex items-center gap-2 mt-1">
-                                        <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400">{log.user?.name || 'System'}</span>
-                                        <span className="text-[10px] text-slate-500">•</span>
-                                        <span className="text-[10px] text-slate-500">{format(new Date(log.createdAt), 'h:mm a')}</span>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))
-                    )}
+
+                <div className="h-[400px] w-full relative z-10">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={trendData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                            <defs>
+                                <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1e293b" opacity={0.5} />
+                            <XAxis
+                                dataKey="date"
+                                axisLine={false}
+                                tickLine={false}
+                                tick={{ fill: '#64748b', fontSize: 10, fontWeight: 900 }}
+                                tickFormatter={(val) => format(new Date(val), 'MMM dd')}
+                                dy={15}
+                            />
+                            <YAxis
+                                axisLine={false}
+                                tickLine={false}
+                                tick={{ fill: '#64748b', fontSize: 10, fontWeight: 900 }}
+                                domain={[0, 100]}
+                                tickFormatter={(val) => `${val}%`}
+                            />
+                            <Tooltip content={<CustomTooltip />} />
+                            <Area
+                                type="monotone"
+                                dataKey="score"
+                                stroke="#3b82f6"
+                                strokeWidth={4}
+                                fillOpacity={1}
+                                fill="url(#colorScore)"
+                                animationDuration={2000}
+                                animationBegin={500}
+                            />
+                        </AreaChart>
+                    </ResponsiveContainer>
                 </div>
             </motion.div>
         </div>

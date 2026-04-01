@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
@@ -86,9 +86,9 @@ const KanbanColumn = ({ title, tasks, status, count }) => {
         <div className="flex-1 min-w-[300px]">
             <div className={`border-t-4 rounded-t-lg ${getColumnColor()}`}>
                 <div className="bg-card p-4 border-x border-b border-border rounded-b-lg">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="font-semibold">{title}</h3>
-                        <span className="bg-muted px-2 py-1 rounded-full text-xs font-medium">{count}</span>
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-xl lg:text-2xl font-black uppercase tracking-wide text-slate-800 dark:text-slate-100">{title}</h3>
+                        <span className="bg-slate-200 dark:bg-slate-800 px-3 py-1.5 rounded-full text-sm font-bold shadow-sm">{count}</span>
                     </div>
 
                     <SortableContext items={tasks.map(t => t._id)} strategy={verticalListSortingStrategy}>
@@ -113,6 +113,11 @@ const KanbanColumn = ({ title, tasks, status, count }) => {
 const KanbanBoard = ({ tasks: initialTasks }) => {
     const [tasks, setTasks] = useState(initialTasks || []);
 
+    // Sync state with props when initialTasks changes
+    useEffect(() => {
+        setTasks(initialTasks || []);
+    }, [initialTasks]);
+
     const sensors = useSensors(
         useSensor(PointerSensor),
         useSensor(KeyboardSensor, {
@@ -120,26 +125,51 @@ const KanbanBoard = ({ tasks: initialTasks }) => {
         })
     );
 
-    const handleDragEnd = (event) => {
+    const handleDragEnd = async (event) => {
         const { active, over } = event;
+        if (!over) return;
 
         if (active.id !== over.id) {
-            setTasks((items) => {
-                const oldIndex = items.findIndex(item => item._id === active.id);
-                const newIndex = items.findIndex(item => item._id === over.id);
-                return arrayMove(items, oldIndex, newIndex);
-            });
+            // Find the task and the target task's status
+            const activeTask = tasks.find(t => t._id === active.id);
+            const overTask = tasks.find(t => t._id === over.id);
+            
+            if (activeTask && overTask && activeTask.status !== overTask.status) {
+                // Cross-column drag! Update the status to match the target column.
+                let newStatus = overTask.status;
+                if (['Rejected', 'Overdue'].includes(newStatus)) newStatus = 'Pending';
+                if (newStatus === 'Under Review') newStatus = 'In Progress';
+                if (newStatus === 'Completed' || newStatus === 'Submitted') newStatus = 'Approved';
+                
+                try {
+                    // Optimistic update locally
+                    setTasks(items => items.map(item => 
+                        item._id === active.id ? { ...item, status: newStatus } : item
+                    ));
+                    // Send API request to persist
+                    const api = require('../../api/axios').default;
+                    await api.put(`/tasks/${active.id}`, { status: newStatus });
+                } catch (error) {
+                    console.error('Failed to update task status:', error);
+                }
+            } else {
+                setTasks((items) => {
+                    const oldIndex = items.findIndex(item => item._id === active.id);
+                    const newIndex = items.findIndex(item => item._id === over.id);
+                    return arrayMove(items, oldIndex, newIndex);
+                });
+            }
         }
     };
 
-    const pendingTasks = tasks.filter(t => t.status === 'Pending');
-    const inProgressTasks = tasks.filter(t => t.status === 'In Progress');
-    const completedTasks = tasks.filter(t => t.status === 'Completed');
+    const pendingTasks = tasks.filter(t => ['Pending', 'Rejected', 'Overdue'].includes(t.status));
+    const inProgressTasks = tasks.filter(t => ['In Progress', 'Under Review'].includes(t.status));
+    const completedTasks = tasks.filter(t => ['Approved', 'Completed', 'Submitted'].includes(t.status));
 
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold mb-2">Task Board</h1>
+            <div className="mb-8">
+                <h1 className="text-4xl lg:text-5xl font-black uppercase tracking-tight mb-2">Task Board</h1>
                 <p className="text-muted-foreground">Drag and drop tasks to update their status</p>
             </div>
 

@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { Users, TrendingUp, CheckSquare } from 'lucide-react';
+import { Users, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnalyticsDashboard from '../../components/admin/AnalyticsDashboard';
 import UserManagement from '../../components/admin/UserManagement';
-import TaskManagement from '../../components/admin/TaskManagement';
 
 const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('analytics');
 
     const tabs = [
         { id: 'analytics', label: 'Analytics', icon: TrendingUp },
-        { id: 'tasks', label: 'Task Management', icon: CheckSquare },
         { id: 'users', label: 'User Management', icon: Users },
     ];
 
@@ -23,7 +21,7 @@ const AdminDashboard = () => {
                 className="mb-10"
             >
                 <h1 className="text-5xl font-black tracking-tighter mb-2 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent uppercase">
-                    Admin Command Center
+                    Compliance Officer Command Center
                 </h1>
                 <p className="text-slate-400 font-medium tracking-wide">Orchestrate compliance operations and monitor network performance</p>
             </motion.div>
@@ -60,7 +58,6 @@ const AdminDashboard = () => {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                     {activeTab === 'analytics' && <AnalyticsDashboard />}
-                    {activeTab === 'tasks' && <TaskManagement />}
                     {activeTab === 'users' && <UserManagement />}
                 </motion.div>
             </AnimatePresence>

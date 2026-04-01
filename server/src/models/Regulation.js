@@ -21,15 +21,6 @@ const regulationSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    status: {
-        type: String,
-        enum: ['Draft', 'Active', 'Obsolete'],
-        default: 'Draft',
-    },
-    currentVersion: {
-        type: String,
-        required: true,
-    },
     effectiveDate: {
         type: Date,
         required: true,

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle, Clock, FileText, TrendingUp, LayoutGrid, List as ListIcon, Activity } from 'lucide-react';
+import { CheckCircle, Clock, FileText, TrendingUp, LayoutGrid, List as ListIcon, Activity, BarChart3 } from 'lucide-react';
 import api from '../../api/axios';
 import toast from 'react-hot-toast';
 import useAuth from '../../hooks/useAuth';
@@ -32,6 +33,7 @@ const itemVariants = {
 };
 
 const EmployeeDashboard = () => {
+    const navigate = useNavigate();
     const { user } = useAuth();
     const [tasks, setTasks] = useState([]);
     const [stats, setStats] = useState({
@@ -50,13 +52,13 @@ const EmployeeDashboard = () => {
 
     const fetchMyTasks = async () => {
         try {
-            const { data } = await api.get('/tasks');
+            const { data } = await api.get(`/tasks?assignedTo=${user?._id}`);
             const myTasks = data || [];
             setTasks(myTasks);
 
             const total = myTasks.length;
-            const pending = myTasks.filter(t => t.status === 'Pending').length;
-            const inProgress = myTasks.filter(t => t.status === 'In Progress').length;
+            const pending = myTasks.filter(t => ['Pending', 'Overdue', 'Rejected'].includes(t.status)).length;
+            const inProgress = myTasks.filter(t => ['In Progress', 'Under Review'].includes(t.status)).length;
             const completed = myTasks.filter(t => ['Approved', 'Completed', 'Submitted'].includes(t.status)).length;
             const complianceScore = total > 0 ? Math.round((completed / total) * 100) : 0;
 
@@ -122,10 +124,10 @@ const EmployeeDashboard = () => {
                 >
                     <div className="flex items-center gap-3 mb-4">
                         <span className="h-0.5 w-12 bg-indigo-600 rounded-full" />
-                        <span className="text-xs font-black uppercase tracking-[0.4em] text-indigo-600 dark:text-indigo-400">Personnel Operations</span>
+                        <span className="text-xs font-black uppercase tracking-[0.4em] text-indigo-600 dark:text-indigo-400">Protocol Operations</span>
                     </div>
                     <h1 className="text-6xl lg:text-8xl font-black tracking-tighter mb-4 text-slate-900 dark:text-white leading-[0.9]">
-                        Mission <span className="text-gradient-mission">Intelligence</span>
+                        Protocol <span className="text-gradient-mission">Intelligence</span>
                     </h1>
                     <p className="text-slate-500 dark:text-slate-400 font-medium text-lg leading-relaxed max-w-2xl border-l-2 border-slate-200 dark:border-slate-800 pl-6">
                         Real-time protocol synchronization and compliance telemetry. Welcome back, <span className="text-slate-900 dark:text-white font-bold">{user?.name}</span>.
@@ -160,53 +162,57 @@ const EmployeeDashboard = () => {
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-20"
             >
                 {[
-                    { label: 'Assigned Protocols', value: stats.total, icon: FileText, color: 'text-indigo-600', bg: 'bg-indigo-500/5' },
-                    { label: 'Awaiting Action', value: stats.pending, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5' },
-                    { label: 'Live Executions', value: stats.inProgress, icon: TrendingUp, color: 'text-blue-500', bg: 'bg-blue-500/5' },
-                    { label: 'Verified Complete', value: stats.completed, icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-500/5' },
-                    { label: 'Operational Efficiency', value: `${stats.complianceScore}%`, icon: Activity, color: 'text-white', bg: 'bg-indigo-600', premium: true }
+                    { label: 'Total Directives', value: stats.total, icon: FileText, color: 'text-indigo-600', bg: 'bg-indigo-500/5', tag: 'Total' },
+                    { label: 'Pending Review', value: stats.pending, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/5', tag: 'Pending' },
+                    { label: 'In-Progress', value: stats.inProgress, icon: TrendingUp, color: 'text-blue-500', bg: 'bg-blue-500/5', tag: 'Current' },
+                    { label: 'Completed', value: stats.completed, icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-500/5', tag: 'Verified' },
+                    { label: 'Compliance Reports', value: 'VIEW', icon: BarChart3, color: 'text-white', bg: 'bg-indigo-600', premium: true, path: '/reports', tag: 'Hub' }
                 ].map((stat, i) => (
                     <motion.div
                         key={i}
                         variants={itemVariants}
+                        onClick={() => stat.path && navigate(stat.path)}
                         className={clsx(
-                            "relative overflow-hidden group p-10 rounded-[3rem] transition-all duration-700 hover:-translate-y-3",
+                            "relative overflow-hidden group p-10 rounded-[3rem] transition-all duration-700 hover:-translate-y-3 cursor-pointer",
                             stat.premium
                                 ? "bg-indigo-600 text-white shadow-2xl shadow-indigo-500/40 border border-white/20"
                                 : "mission-card"
                         )}
                     >
                         <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-8">
+                            <div className="flex items-center justify-between mb-10">
                                 <div className={clsx(
-                                    "w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-700 group-hover:scale-110 mission-stat-glow",
-                                    stat.premium ? "bg-white/20" : stat.bg
+                                    "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-700 group-hover:scale-110",
+                                    stat.premium ? "bg-white/20 shadow-lg shadow-black/10" : stat.bg
                                 )}>
-                                    <stat.icon size={28} className={stat.premium ? "text-white" : stat.color} />
+                                    <stat.icon size={22} className={stat.premium ? "text-white" : stat.color} />
                                 </div>
                                 <span className={clsx(
-                                    "text-[10px] font-black uppercase tracking-[0.3em]",
-                                    stat.premium ? "text-indigo-100" : "text-slate-400"
+                                    "text-[9px] font-black uppercase tracking-[0.4em] px-3 py-1.5 rounded-lg",
+                                    stat.premium ? "bg-white/10 text-indigo-100" : "bg-slate-100 dark:bg-slate-800 text-slate-400"
                                 )}>
-                                    {stat.label.split(' ')[0]}
+                                    {stat.tag}
                                 </span>
                             </div>
-                            <div className="space-y-2">
+                            <div className="space-y-4">
                                 <p className={clsx(
-                                    "text-6xl font-black tracking-tighter leading-none mb-2",
-                                    stat.premium ? "text-white" : "text-slate-900 dark:text-white"
+                                    "font-black tracking-tighter leading-none transition-all duration-700",
+                                    typeof stat.value === 'string' ? "text-5xl" : "text-6xl",
+                                    stat.premium ? "text-white group-hover:scale-110 origin-left" : "text-slate-900 dark:text-white"
                                 )}>
                                     {stat.value}
                                 </p>
-                                <p className={clsx(
-                                    "text-[11px] font-bold uppercase tracking-widest",
-                                    stat.premium ? "text-indigo-200" : "text-slate-400"
-                                )}>
-                                    {stat.label}
-                                </p>
+                                <div className="min-h-[2.4rem] flex flex-col justify-end">
+                                    <p className={clsx(
+                                        "text-[10px] font-black uppercase tracking-[0.15em] leading-relaxed",
+                                        stat.premium ? "text-indigo-100" : "text-slate-400"
+                                    )}>
+                                        {stat.label}
+                                    </p>
+                                </div>
                                 <div className={clsx(
-                                    "h-1 w-12 rounded-full transition-all duration-1000 group-hover:w-full",
-                                    stat.premium ? "bg-white/40" : "bg-indigo-500/20"
+                                    "h-1 w-12 rounded-full transition-all duration-1000 group-hover:w-full opacity-30",
+                                    stat.premium ? "bg-white" : "bg-indigo-500"
                                 )} />
                             </div>
                         </div>
@@ -223,7 +229,7 @@ const EmployeeDashboard = () => {
                 <div className="flex items-center gap-4">
                     <div className="w-2 h-10 bg-indigo-600 rounded-full" />
                     <div>
-                        <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight uppercase leading-none mb-1">Mission Log</h2>
+                        <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight uppercase leading-none mb-1">Protocol Log</h2>
                         <p className="text-xs font-heavy text-slate-400 uppercase tracking-[0.2em]">Active Workflow Stream</p>
                     </div>
                 </div>

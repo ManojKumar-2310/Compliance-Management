@@ -28,11 +28,12 @@ const protect = async (req, res, next) => {
 };
 
 const authorize = (...roles) => {
+    const lowerRoles = roles.map(r => r.toLowerCase());
     return (req, res, next) => {
         if (!req.user) {
             return res.status(401).json({ message: 'Not authorized, user not found' });
         }
-        if (!roles.includes(req.user.role)) {
+        if (!req.user.role || !lowerRoles.includes(req.user.role.toLowerCase())) {
             return res.status(403).json({
                 message: `User role ${req.user.role} is not authorized to access this route`,
             });

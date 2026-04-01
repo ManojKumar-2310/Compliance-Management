@@ -39,7 +39,7 @@ const AdminLogin = () => {
                 return;
             }
 
-            toast.success('Welcome back, Administrator!');
+            toast.success('Welcome back, Compliance Officer!');
             setTimeout(() => navigate('/dashboard'), 500);
         } catch (err) {
             const errorMsg = err.response?.data?.message || err.message || 'Login failed';
@@ -124,7 +124,7 @@ const AdminLogin = () => {
 
                     <div className="mb-12">
                         <h2 className="text-5xl font-black text-slate-900 dark:text-white tracking-tighter mb-4 uppercase">
-                            Admin <span className="text-gradient">Portal</span>
+                            Compliance Officer <span className="text-gradient">Portal</span>
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 font-medium tracking-tight">
                             Identify yourself to access core system functions.
@@ -147,8 +147,11 @@ const AdminLogin = () => {
                                     type="text"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    readOnly
+                                    onFocus={(e) => e.target.removeAttribute('readonly')}
+                                    autoComplete="new-password"
                                     className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 pl-14 rounded-[1.5rem] focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/50 text-slate-900 dark:text-white font-bold transition-all outline-none"
-                                    placeholder="admin@compliance.pro"
+                                    placeholder="officer@compliance.pro"
                                     required
                                 />
                             </div>
@@ -162,6 +165,9 @@ const AdminLogin = () => {
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    readOnly
+                                    onFocus={(e) => e.target.removeAttribute('readonly')}
+                                    autoComplete="new-password"
                                     className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 pl-14 rounded-[1.5rem] focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500/50 text-slate-900 dark:text-white font-bold transition-all outline-none"
                                     placeholder="••••••••"
                                     required

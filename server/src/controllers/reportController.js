@@ -11,7 +11,7 @@ const getDashboardStats = async (req, res) => {
     try {
         const totalUsers = await User.countDocuments();
         const totalRegulations = await Regulation.countDocuments();
-        const activeRegulations = await Regulation.countDocuments({ status: 'Active' });
+        const activeRegulations = totalRegulations; // All current regulations are active
 
         const totalTasks = await Task.countDocuments();
         const pendingTasks = await Task.countDocuments({ status: 'Pending' });
@@ -151,9 +151,27 @@ const exportTaskReport = async (req, res) => {
     }
 };
 
+// @desc    Get all verified directives (Approved tasks)
+// @route   GET /api/reports/verified
+// @access  Private (Auditor/Admin)
+const getVerifiedReports = async (req, res) => {
+    try {
+        const verifiedTasks = await Task.find({ status: 'Approved' })
+            .populate('assignedTo', 'name')
+            .populate('regulationId', 'title')
+            .sort({ updatedAt: -1 });
+
+        res.json(verifiedTasks);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getDashboardStats,
     getTaskChartData,
     getDetailedReportStats,
-    exportTaskReport
+    exportTaskReport,
+    getVerifiedReports
 };
+

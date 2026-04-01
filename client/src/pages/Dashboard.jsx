@@ -28,7 +28,7 @@ const Dashboard = () => {
     const roleRoutes = {
         'Admin': '/admin/dashboard',
         'Compliance Officer': '/admin/dashboard', // Shared for now
-        'Auditor': '/auditor/dashboard',
+        'Auditor': '/auditor/mission-control',
         'Employee': '/employee/dashboard'
     };
 

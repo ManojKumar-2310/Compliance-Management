@@ -6,6 +6,8 @@ import AuditorLogin from './pages/AuditorLogin';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AuditorDashboard from './pages/auditor/AuditorDashboard';
+import MissionControl from './pages/auditor/MissionControl';
+import VerificationQueue from './pages/auditor/VerificationQueue';
 import EmployeeDashboard from './pages/employee/EmployeeDashboard';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
@@ -18,6 +20,7 @@ import Users from './pages/Users';
 import Documents from './pages/Documents';
 import Audits from './pages/Audits';
 import Risks from './pages/Risks';
+
 import Reports from './pages/Reports';
 import EmployeeTasks from './pages/EmployeeTasks';
 
@@ -65,6 +68,8 @@ function App() {
                 {/* Role-Specific Dashboards */}
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/auditor/dashboard" element={<AuditorDashboard />} />
+                <Route path="/auditor/mission-control" element={<MissionControl />} />
+                <Route path="/auditor/verification-queue" element={<VerificationQueue />} />
                 <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
 
                 {/* Common Routes */}

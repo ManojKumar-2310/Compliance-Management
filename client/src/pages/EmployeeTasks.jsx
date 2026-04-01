@@ -175,7 +175,7 @@ const EmployeeTasks = () => {
                                 </div>
 
                                 <div className="mt-auto space-y-3">
-                                    {task.status === 'Pending' && (
+                                    {['Pending', 'Rejected', 'Overdue'].includes(task.status) && (
                                         <button
                                             onClick={() => handleStatusUpdate(task._id, 'In Progress')}
                                             className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/30 hover:scale-[1.02] flex items-center justify-center gap-2 group/btn"

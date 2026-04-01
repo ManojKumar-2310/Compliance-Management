@@ -16,7 +16,7 @@ const LandingPage = () => {
 
     const portals = [
         {
-            role: 'Admin',
+            role: 'Compliance Officer',
             path: '/admin-login',
             desc: 'Orchestrate compliance protocols and oversee risk matrices.',
             icon: Shield,

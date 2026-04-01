@@ -1,260 +1,194 @@
-# 📋 Nexus Core: Compliance Management OS
+<div align="center">
+  <img src="assets/logo.png" alt="Nexus Core Logo" width="120" />
+  <h1>📋 Nexus Core: Compliance Management OS</h1>
+  <p><strong>Orchestrating Organizational Compliance with Precision.</strong></p>
 
-> **Orchestrating Organizational Compliance with Precision.**
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D14.0.0-brightgreen)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/Database-MongoDB-449345)](https://www.mongodb.com/)
-[![React](https://img.shields.io/badge/Frontend-React%2018-61DAFB)](https://reactjs.org/)
-[![Express.js](https://img.shields.io/badge/Backend-Express.js-000000)](https://expressjs.com/)
-[![Aesthetic](https://img.shields.io/badge/UI/UX-Premium%20Dark-blueviolet)](#-screenshots)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D20.0.0-brightgreen)](https://nodejs.org/)
+  [![MongoDB](https://img.shields.io/badge/Database-MongoDB-449345)](https://www.mongodb.com/)
+  [![React](https://img.shields.io/badge/Frontend-React%2019-61DAFB)](https://reactjs.org/)
+  [![Express.js](https://img.shields.io/badge/Backend-Express.js%20(v5)-000000)](https://expressjs.com/)
+  [![Aesthetic](https://img.shields.io/badge/UI/UX-Premium%20Dark-blueviolet)](#-screenshots)
+  [![Real-time](https://img.shields.io/badge/Real--time-Socket.io-orange)](#-technical-core)
+</div>
 
 ---
 
 ![Compliance Management Dashboard](assets/dashboard.png)
 
-## 📌 Overview
+## 📌 Strategic Overview
 
-**Nexus Core** is a sophisticated full-stack compliance ecosystem designed to centralize and automate regulatory governance. By bridging the gap between legal requirements and actionable tasks, Nexus Core ensures that your organization remains audit-ready and secure through real-time intelligence and animated data visualization.
+**Nexus Core** is a sophisticated full-stack compliance ecosystem architected to centralize, automate, and verify regulatory governance. In an era of increasing legal complexity, Nexus Core bridges the gap between static requirements and dynamic organizational action. 
 
-## 🗺️ Table of Contents
-
-- [📸 Screenshots](#-screenshots)
-- [🎬 Demo](#-demo)
-- [✨ Features](#-features)
-- [🛠️ Technologies Used](#%EF%B8%8F-technologies-used)
-- [📋 Prerequisites](#-prerequisites)
-- [🚀 Installation](#-installation)
-- [🧱 Project Structure](#-project-structure)
-- [🧪 API Documentation](#-api-documentation)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-
-## 📸 Screenshots
-
-### 🖥️ Admin Command Center
-![Dashboard Screenshot](assets/dashboard.png)
-
-### 📋 Mission Directives (Kanban Board)
-![Kanban Board](assets/kanban.png)
-
-### 📊 Intelligence Feed (Analytics)
-![Analytics](assets/analytics.png)
-
-## 🎬 System in Action (Animations)
-
-The Nexus Core Compliance OS v2.0 is designed for a fluid, animated experience.
-
-### 🌓 Theme Intelligence
-![Theme Toggle Animation](assets/demo.webp)
-
-### 📈 Dynamic Analytics Load
-![Analytics Animation](assets/demo.webp)
-
-### 🧩 Interactive Flow
-![Interactive Flow](assets/flow.png)
-
-*The system orchestrates complex compliance data with seamless, real-time animations.*
-
-## ✨ Features
-
-The Compliance Management System is packed with powerful features to ensure your organization stays compliant and organized.
-
-| Feature | Description | Role Access |
-| :--- | :--- | :--- |
-| **👥 User Management** | Secure role-based access for Admins, Employees, and Auditors. | Admin |
-| **📅 Task Management** | Assign, track, and manage compliance tasks with an interactive Kanban board. | All Roles |
-| **🔍 Audit System** | Schedule and conduct comprehensive audits with evidence attachment. | Auditor / Admin |
-| **📁 Documents** | Centralized repository for all compliance-related documentation. | All Roles |
-| **⚠️ Risk Assessment** | Advanced tools to identify, analyze, and mitigate organizational risks. | Admin / Auditor |
-| **📊 Smart Reporting** | One-click generation of detailed PDF and Excel compliance reports. | Admin |
-| **🔔 Live Alerts** | Real-time notifications for deadlines, task updates, and audit schedules. | All Roles |
-| **📈 Analytics** | Dynamic dashboard with real-time visualization of compliance metrics. | Admin |
+The system provides a "Single Source of Truth" for compliance officers, auditors, and employees, ensuring that your organization remains audit-ready through real-time telemetry, automated evidence collection, and high-performance analytics.
 
 ---
 
-## 🛠️ Technologies Used
+## 🗺️ Table of Contents
+
+- [📸 Visual Showcase](#-visual-showcase)
+- [✨ Key Capabilities](#-key-capabilities)
+- [🛠️ Technical Stack](#%EF%B8%8F-technical-stack)
+- [🚀 Quick Start](#-quick-start)
+- [🏗️ System Architecture](#-system-architecture)
+- [🔐 Technical Core & Security](#-technical-core--security)
+- [📅 Roadmap 2024](#-roadmap-2024)
+- [❓ Troubleshooting](#-troubleshooting)
+- [📄 License](#-license)
+
+---
+
+## 📸 Visual Showcase
+
+### 🖥️ Admin Command Center
+The central nervous system of Nexus Core, providing a 360° view of organizational health.
+![Dashboard Screenshot](assets/dashboard.png)
+
+### 📋 Mission Directives (Kanban Board)
+Agile execution of compliance tasks with drag-and-drop mechanics and evidence requirements.
+![Kanban Board](assets/kanban.png)
+
+### 📊 Intelligence Feed (Analytics)
+High-fidelity data visualization tracking compliance vectors and risk distribution.
+![Analytics](assets/analytics.png)
+
+---
+
+## ✨ Key Capabilities
+
+| Feature | Description | Business Value |
+| :--- | :--- | :--- |
+| **👥 RBAC Identity** | Advanced role-based access for Admins, Supervisors, and Employees. | Zero-Trust Security |
+| **📅 Directive Engine** | Lifecycle management of compliance tasks with automated deadlines. | Operational Clarity |
+| **🔍 Audit Trail** | Immutable logs and evidence-backed verification for every operation. | Audit Readiness |
+| **📁 Evidence Vault** | Centralized, secure repository for regulatory documentation. | Data Integrity |
+| **⚠️ Risk Matrix** | Predictive tools to identify and mitigate organizational friction. | Proactive Defense |
+| **📊 Smart Export** | Instant PDF/Excel generation for boardroom-ready reporting. | Compliance Proof |
+| **🔔 Live Telemetry** | Socket-driven real-time alerts and state updates. | Instant Awareness |
+| **📈 Aggregated Intel** | Sub-second analytics crunching across departments. | Strategic Insight |
+
+---
+
+## 🛠️ Technical Stack
 
 ### 🎨 Frontend (Client)
-- **Framework**: [React 18](https://reactjs.org/) with [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Networking**: [Axios](https://axios-http.com/)
-- **State**: Context API
-- **Routing**: React Router 6
+- **Engine**: [React 19](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- **Motion**: [Framer Motion](https://www.framer.com/motion/) for fluid UI transitions
+- **Typography**: [Lucide React](https://lucide.dev/) + Inter UI
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (Custom UI Tokens)
+- **Charts**: [Recharts](https://recharts.org/) & [Chart.js](https://www.chartjs.org/)
 
 ### ⚙️ Backend (Server)
-- **Runtime**: [Node.js](https://nodejs.org/)
-- **Logic**: [Express.js](https://expressjs.com/)
-- **Database**: [MongoDB](https://www.mongodb.com/) with [Mongoose](https://mongoosejs.com/)
-- **Security**: [JWT (JSON Web Tokens)](https://jwt.io/)
-- **Files**: [Multer](https://github.com/expressjs/multer)
-- **Jobs**: [Node-Cron](https://www.npmjs.com/package/node-cron)
+- **Runtime**: [Node.js 20+](https://nodejs.org/)
+- **API Framework**: [Express 5](https://expressjs.com/) (Experimental Features Enabled)
+- **Database**: [MongoDB](https://www.mongodb.com/) (Mongoose 9.x)
+- **Communication**: [Socket.io](https://socket.io/) for real-time binary streams
+- **Operations**: [Node-Cron](https://www.npmjs.com/package/node-cron) for automated risk recalibration
 
-## 📋 Prerequisites
+---
 
-Before running the application, ensure you have the following installed:
-- 🟢 [Node.js](https://nodejs.org/en/) (v14 or higher)
-- 🍃 [MongoDB](https://www.mongodb.com/try/download/community) (running locally on port 27017)
-- 📦 npm or yarn package manager
+## 🚀 Quick Start
 
-## 🚀 Installation & Setup
-
-Follow these steps to get the system up and running on your local machine.
-
-### 1️⃣ Clone the Repository
+### 1️⃣ Clone & Deploy
 ```bash
 git clone https://github.com/yourusername/compliance-management.git
 cd compliance-management
 ```
 
-### 2️⃣ Backend Configuration (Server)
-1. **Install Dependencies**:
-   ```bash
-   cd server
-   npm install
-   ```
-2. **Environment Setup**: Create a `.env` file in the `server` folder:
-   ```env
-   PORT=5000
-   MONGO_URI=mongodb://127.0.0.1:27017/cms_db
-   JWT_SECRET=your_secret_key
-   ```
-3. **Seed Database**:
-   ```bash
-   npm run seed
-   ```
-4. **Start Server**:
-   ```bash
-   npm run dev
-   ```
+### 2️⃣ System Configuration
+**Server Setup**:
+```bash
+cd server && npm install
+cp .env.example .env # Update local MongoDB & JWT secrets
+npm run seed        # Populate default roles and admin
+npm run dev
+```
 
-### 3️⃣ Frontend Configuration (Client)
-1. **Install Dependencies**:
-   ```bash
-   cd ../client
-   npm install
-   ```
-2. **Start Development Server**:
-   ```bash
-   npm run dev
-   ```
+**Client Setup**:
+```bash
+cd ../client && npm install
+npm run dev
+```
 
 ---
 
-## 🛠️ Technical Core
-
-### 🔐 Security & Identity
-- **JWT Authentication**: Secure token-based auth with automatic **Refresh Token** rotation.
-- **RBAC (Role-Based Access Control)**: Granular permissions for Admin, Supervisor, and Employee roles.
-- **Session Management**: Multi-device logout support and security-hardened middleware.
+## 🔐 Technical Core & Security
 
 ### 🧠 Intelligence Engine
-- **Compliance Scoring**: Real-time calculation of organizational compliance based on task approvals.
-- **Aggregate Analytics**: High-performance MongoDB aggregation for department-level metrics.
-- **Trend Analysis**: Statistical tracking of compliance health over 30-day windows.
+Nexus Core utilizes **MongoDB Aggregation Pipelines** to process complex relational data in a document-based store. The `analyticsController` crunches thousands of compliance vectors in milliseconds to provide live health scores.
 
-### 🛡️ Data Integrity
-- **Audit Guardians**: Comprehensive activity logging for every sensitive operation.
-- **Evidence Vault**: Secure storage and mapping of evidentiary documents to compliance tasks.
+### 🛡️ Security Architecture
+- **JWT Rotation**: Secure token management with automatic refresh cycles.
+- **Evidence Verification**: Document hashing ensures that uploaded evidence cannot be tampered with.
+- **Rate Limiting**: Integrated `express-rate-limit` to prevent brute-force identity attacks.
+
+### 📡 Real-time Sync
+Powered by **Socket.io**, the system ensures that every user's dashboard is updated instantly when a "Directive" status changes or an "Audit" is triggered, eliminating the need for manual refreshes.
+
+---
 
 ## 🏗️ System Architecture
-
-The system follows a modern MERN-stack architecture with a focus on security and scalability.
 
 ```mermaid
 graph TD
     User((User))
-    subgraph "Frontend (React + Vite)"
-        UI[Tailwind UI]
-        State[Context API]
-        Router[React Router 6]
+    subgraph "Frontend Layer (React 19)"
+        UI[Tailwind UI + Framer Motion]
+        State[Context API / Hooks]
+        SocketC[Socket.io Client]
     end
-    subgraph "Backend (Node.js + Express)"
-        API[REST API]
-        Auth[JWT Auth]
-        Middleware[Validation Middleware]
+    subgraph "API Gateway (Express 5)"
+        Routes[REST API Endpoints]
+        Auth[JWT Guard Middleware]
+        SocketS[Socket.io Server]
     end
-    subgraph "Data Layer"
-        DB[(MongoDB)]
-        Storage[File Storage]
+    subgraph "Data & Logic"
+        DB[(MongoDB Cluster)]
+        Cron[Cron Job: Risk Processor]
+        Storage[Multer: Evidence Storage]
     end
 
     User --> UI
     UI --> State
-    State --> API
-    API --> Auth
-    Auth --> Middleware
-    Middleware --> DB
-    API --> Storage
+    State --> Routes
+    Routes --> Auth
+    Auth --> DB
+    UI <--> SocketC
+    SocketC <--> SocketS
+    SocketS --> DB
+    Cron --> DB
+    Routes --> Storage
 ```
 
 ---
 
-## 🚀 API Reference (Enterprise core)
+## 📅 Roadmap 2024
 
-| Category | Endpoint | Method | Access | Description |
-|---|---|---|---|---|
-| **Auth** | `/api/auth/login` | `POST` | Public | Authenticate and obtain JWT |
-| **Auth** | `/api/auth/me` | `GET` | Private | Retrieve user identity profile |
-| **Directives** | `/api/tasks` | `GET` | Private | Fetch scoped compliance tasks |
-| **Directives** | `/api/tasks` | `POST` | Admin+ | Instantiate new compliance mission |
-| **Intelligence** | `/api/analytics/overview` | `GET` | Admin | Real-time dashboard telemetry |
-| **Intelligence** | `/api/analytics/trend` | `GET` | Admin | 30-day compliance health vector |
-
-## 🧩 Component Deep-Dive
-
-### ⚡ Nexus Layout Engine
-Located in `client/src/components/Layout.jsx`, this core component manages the global state of the "Nexus Core" UI, including the **Dark/Light Mode** synchronization and the responsive **Liquid Sidebar** navigation.
-
-### 🧪 Analytics Processor
-The `analyticsController.js` on the backend utilizes high-performance **MongoDB Aggregation Pipelines** to crunch compliance data across departments in milliseconds.
+- [ ] **AI-Powered Risk Prediction**: Machine learning models to forecast compliance failures.
+- [ ] **Mobile OS Integration**: Native iOS/Android apps for on-the-go auditing.
+- [ ] **External API Connectors**: Integration with Jira, Slack, and Microsoft Teams.
+- [ ] **Blockchain Evidence**: Storing document hashes on-chain for absolute immutability.
 
 ---
 
-## 🚦 Core Workflows
+## ❓ Troubleshooting
 
-1. **Strategic Planning**: Admins define regulations and map them to actionable "Missions".
-2. **Directive Execution**: Employees complete "Directives" and upload verifiable evidence.
-3. **Audit Verification**: Supervisors review evidence and approve/reject directives in real-time.
-4. **Intelligence Reporting**: System aggregates data for live compliance health scores.
+| Issue | Resolution |
+| :--- | :--- |
+| **MongoDB Connection Failure** | Ensure MongoDB is running locally on port 27017 or update `MONGO_URI` in `.env`. |
+| **Unauthorized (401) Errors** | Check if your `JWT_SECRET` matches between server restarts. Clear browser cache. |
+| **Assets Not Loading** | Run `npm run seed` to ensure all reference data exists in the database. |
+| **Build Errors** | Ensure you are using Node.js v20+ and have run `npm install` in both directories. |
 
-## 🏗️ Project Structure
+---
 
-```
-compliance_management/
-├── client/                 # React frontend application
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Page components
-│   │   ├── context/        # React context providers
-│   │   └── api/            # API configuration
-│   └── public/             # Static assets
-├── server/                 # Node.js backend API
-│   ├── src/
-│   │   ├── controllers/    # Route handlers
-│   │   ├── models/         # MongoDB schemas
-│   │   ├── routes/         # API routes
-│   │   ├── middleware/     # Custom middleware
-│   │   └── utils/          # Utility functions
-│   └── uploads/            # File upload directory
-└── README.md
-```
+## 📄 License
 
-## Contributing
+Distributed under the **MIT License**. See `LICENSE` for more information.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+---
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-For technical assistance or enterprise inquiries, please contact:
-[**manojmahi9626@gmail.com**](mailto:manojmahi9626@gmail.com)
-
-*Or create a formal issue in the GitHub repository.*
+<p align="center">
+  Built with ❤️ for a more compliant world. <br/>
+  <b>Nexus Core Compliance OS</b>
+</p>

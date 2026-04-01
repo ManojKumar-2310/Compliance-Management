@@ -16,17 +16,22 @@ const itemVariants = {
     visible: { y: 0, opacity: 1, transition: { duration: 0.4 } }
 };
 
+const PREDEFINED_CATEGORIES = [
+    'Data Privacy', 'Network Security', 'Physical Security', 'Financial Compliance', 
+    'Operational Protocol', 'HR Compliance', 'Safety & Health', 
+    'Environmental Regulation', 'Technical Standards'
+];
+
 const Regulations = () => {
     const { user } = useAuth();
     const [regulations, setRegulations] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [formData, setFormData] = useState({
-        title: '', description: '', category: '', effectiveDate: '', currentVersion: '1.0', status: 'Draft'
+        title: '', description: '', category: '', effectiveDate: ''
     });
     const [editingId, setEditingId] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [filterCategory, setFilterCategory] = useState('All');
 
     const fetchRegulations = async () => {
         try {
@@ -56,11 +61,11 @@ const Regulations = () => {
             }
             setShowModal(false);
             setEditingId(null);
-            setFormData({ title: '', description: '', category: '', effectiveDate: '', currentVersion: '1.0', status: 'Draft' });
+            setFormData({ title: '', description: '', category: '', effectiveDate: '' });
             fetchRegulations();
         } catch (error) {
             console.error(error);
-            toast.error('Operation failed');
+            toast.error(error.response?.data?.message || 'Operation failed');
         }
     };
 
@@ -70,9 +75,7 @@ const Regulations = () => {
             title: reg.title,
             description: reg.description,
             category: reg.category,
-            effectiveDate: reg.effectiveDate.split('T')[0],
-            currentVersion: reg.currentVersion,
-            status: reg.status
+            effectiveDate: reg.effectiveDate.split('T')[0]
         });
         setShowModal(true);
     };
@@ -90,15 +93,12 @@ const Regulations = () => {
         }
     }
 
-    const canEdit = ['Admin', 'Compliance Officer'].includes(user?.role);
-
-    const categories = ['All', ...new Set(regulations.map(r => r.category))];
+    const canEdit = ['admin', 'compliance officer', 'employee', 'manager', 'auditor'].includes(user?.role?.toLowerCase());
 
     const filteredRegulations = regulations.filter(reg => {
         const matchesSearch = reg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             reg.description.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = filterCategory === 'All' || reg.category === filterCategory;
-        return matchesSearch && matchesCategory;
+        return matchesSearch;
     });
 
     if (loading) return (
@@ -108,7 +108,7 @@ const Regulations = () => {
                 <div className="absolute inset-0 border-4 border-indigo-500 rounded-full border-t-transparent animate-spin" />
                 <div className="absolute inset-4 border-4 border-blue-500 rounded-full border-b-transparent animate-spin direction-reverse duration-700" />
             </div>
-            <p className="text-slate-900 dark:text-white font-black tracking-[0.3em] uppercase text-xs animate-pulse">Loading Registry...</p>
+            <p className="text-slate-900 dark:text-white font-black tracking-[0.3em] uppercase text-xs animate-pulse">Loading Protocol Registry...</p>
         </div>
     );
 
@@ -125,7 +125,7 @@ const Regulations = () => {
                         <span className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-500">Compliance Standards</span>
                     </div>
                     <h2 className="text-5xl lg:text-7xl font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-[0.9] mb-4">
-                        Regulatory <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Registry</span>
+                        Protocol <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Registry</span>
                     </h2>
                     <p className="text-slate-500 dark:text-slate-400 font-medium text-lg leading-relaxed">
                         Centralized repository for compliance standards and operational protocols.
@@ -148,7 +148,7 @@ const Regulations = () => {
                             <button
                                 onClick={() => {
                                     setEditingId(null);
-                                    setFormData({ title: '', description: '', category: '', effectiveDate: '', currentVersion: '1.0', status: 'Draft' });
+                                    setFormData({ title: '', description: '', category: '', effectiveDate: '' });
                                     setShowModal(true);
                                 }}
                                 className="px-6 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl font-black shadow-xl shadow-slate-900/20 hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center justify-center gap-3 active:scale-95 whitespace-nowrap"
@@ -157,23 +157,6 @@ const Regulations = () => {
                                 <span className="uppercase tracking-widest text-xs hidden sm:inline">Append Standard</span>
                             </button>
                         )}
-                    </div>
-
-                    <div className="flex gap-2 w-full overflow-x-auto pb-2 sm:pb-0 no-scrollbar justify-end">
-                        {categories.slice(0, 5).map(cat => (
-                            <button
-                                key={cat}
-                                onClick={() => setFilterCategory(cat)}
-                                className={clsx(
-                                    "px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap border",
-                                    filterCategory === cat
-                                        ? "bg-indigo-600 text-white border-indigo-600 shadow-md transform scale-105"
-                                        : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500"
-                                )}
-                            >
-                                {cat}
-                            </button>
-                        ))}
                     </div>
                 </div>
             </motion.header>
@@ -186,10 +169,9 @@ const Regulations = () => {
             >
                 <div className="hidden md:grid grid-cols-12 gap-6 px-8 py-2 text-[10px] font-black uppercase tracking-widest text-slate-400 select-none">
                     <div className="col-span-5 pl-4">Standard Identification</div>
-                    <div className="col-span-2">Classification</div>
-                    <div className="col-span-2">Version Control</div>
-                    <div className="col-span-2">Status</div>
-                    <div className="col-span-1 text-right">Actions</div>
+                    <div className="col-span-3 text-center">Alter Type</div>
+                    <div className="col-span-2 text-center">Effective Date</div>
+                    <div className="col-span-2 text-right">Actions</div>
                 </div>
 
                 <AnimatePresence>
@@ -201,26 +183,13 @@ const Regulations = () => {
                                 layout
                                 className="group relative bg-white dark:bg-slate-900 rounded-[2rem] p-6 border border-slate-100 dark:border-slate-800 hover:shadow-xl dark:hover:shadow-indigo-500/10 transition-all duration-300 grid grid-cols-1 md:grid-cols-12 gap-6 items-center overflow-hidden"
                             >
-                                <div className={clsx(
-                                    "absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-500",
-                                    reg.status === 'Active' ? 'bg-emerald-500' :
-                                        reg.status === 'Draft' ? 'bg-indigo-500' : 'bg-rose-500'
-                                )} />
+                                <div className="absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-500 bg-indigo-500" />
 
-                                <div className={clsx(
-                                    "absolute right-0 top-0 w-32 h-32 blur-[60px] rounded-full transition-opacity opacity-0 group-hover:opacity-100 pointer-events-none",
-                                    reg.status === 'Active' ? 'bg-emerald-500/10' :
-                                        reg.status === 'Draft' ? 'bg-indigo-500/10' : 'bg-rose-500/10'
-                                )} />
+                                <div className="absolute right-0 top-0 w-32 h-32 blur-[60px] rounded-full transition-opacity opacity-0 group-hover:opacity-100 pointer-events-none bg-indigo-500/10" />
 
                                 <div className="col-span-1 md:col-span-5 pl-4 relative z-10">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <div className={clsx(
-                                            "p-2 rounded-lg",
-                                            reg.status === 'Active' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' :
-                                                reg.status === 'Draft' ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' :
-                                                    'bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400'
-                                        )}>
+                                        <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
                                             <Shield size={16} />
                                         </div>
                                         <h3 className="font-black text-lg text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors uppercase tracking-tight">
@@ -232,52 +201,34 @@ const Regulations = () => {
                                     </p>
                                 </div>
 
-                                <div className="col-span-1 md:col-span-2 relative z-10">
-                                    <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl w-fit">
-                                        <Filter size={14} className="text-slate-400" />
-                                        <span className="font-bold text-slate-700 dark:text-slate-200 text-xs uppercase tracking-wide">{reg.category}</span>
-                                    </div>
+                                <div className="col-span-1 md:col-span-3 relative z-10 text-center">
+                                    <button 
+                                        onClick={() => handleEdit(reg)}
+                                        className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl w-full hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all group/type"
+                                    >
+                                        <Filter size={14} className="text-slate-400 group-hover/type:text-indigo-500 ml-1" />
+                                        <span className="font-bold text-slate-700 dark:text-slate-200 text-xs uppercase tracking-wide group-hover/type:text-indigo-600 truncate flex-1 text-center pr-4">{reg.category}</span>
+                                    </button>
                                 </div>
 
-                                <div className="col-span-1 md:col-span-2 relative z-10">
-                                    <div className="space-y-1">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest w-12">Rev</span>
-                                            <span className="text-sm font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">v{reg.currentVersion}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest w-12">Date</span>
-                                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{new Date(reg.effectiveDate).toLocaleDateString()}</span>
-                                        </div>
-                                    </div>
+                                <div className="col-span-1 md:col-span-2 relative z-10 text-center">
+                                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{new Date(reg.effectiveDate).toLocaleDateString()}</span>
                                 </div>
 
-                                <div className="col-span-1 md:col-span-2 relative z-10">
-                                    <span className={clsx(
-                                        'px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border inline-flex items-center gap-2 shadow-sm',
-                                        reg.status === 'Active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' :
-                                            reg.status === 'Draft' ? 'bg-indigo-50 text-indigo-600 border-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20' :
-                                                'bg-rose-50 text-rose-600 border-rose-100 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20'
-                                    )}>
-                                        {reg.status === 'Active' ? <CheckCircle2 size={10} /> : reg.status === 'Draft' ? <Activity size={10} /> : <AlertCircle size={10} />}
-                                        {reg.status}
-                                    </span>
-                                </div>
-
-                                <div className="col-span-1 md:col-span-1 flex justify-end gap-2 relative z-10">
+                                <div className="col-span-1 md:col-span-2 flex justify-end gap-2 relative z-10">
                                     {canEdit && (
-                                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0">
+                                        <div className="flex gap-2 transition-all opacity-100">
                                             <button
                                                 onClick={() => handleEdit(reg)}
-                                                className="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-slate-800 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-500 rounded-xl text-slate-400 transition-all shadow-sm"
+                                                className="w-10 h-10 flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/40 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-500 rounded-xl text-indigo-600 dark:text-indigo-400 transition-all shadow-md border border-indigo-100 dark:border-indigo-500/20"
                                                 title="Edit Protocol"
                                             >
                                                 <Edit2 size={16} />
                                             </button>
-                                            {user.role === 'Admin' && (
+                                            {(user.role === 'Admin' || user.role?.toLowerCase() === 'admin') && (
                                                 <button
                                                     onClick={() => handleDelete(reg._id)}
-                                                    className="w-10 h-10 flex items-center justify-center bg-slate-50 dark:bg-slate-800 hover:bg-rose-600 hover:text-white dark:hover:bg-rose-500 rounded-xl text-slate-400 transition-all shadow-sm"
+                                                    className="w-10 h-10 flex items-center justify-center bg-rose-50 dark:bg-rose-900/40 hover:bg-rose-600 hover:text-white dark:hover:bg-rose-500 rounded-xl text-rose-600 dark:text-rose-400 transition-all shadow-md border border-rose-100 dark:border-rose-500/20"
                                                     title="Revoke Protocol"
                                                 >
                                                     <Trash2 size={16} />
@@ -355,65 +306,33 @@ const Regulations = () => {
                                     />
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Category</label>
-                                        <div className="relative">
-                                            <input
-                                                required
-                                                type="text"
-                                                className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 rounded-[1.5rem] transition-all text-sm font-bold text-slate-900 dark:text-white"
-                                                placeholder="Security"
-                                                value={formData.category}
-                                                onChange={e => setFormData({ ...formData, category: e.target.value })}
-                                                list="category-suggestions"
-                                            />
-                                            <Filter className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
-                                            <datalist id="category-suggestions">
-                                                {categories.filter(c => c !== 'All').map(c => <option key={c} value={c} />)}
-                                            </datalist>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Version ID</label>
-                                        <input
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Protocol Type</label>
+                                    <div className="relative">
+                                        <select
                                             required
-                                            type="text"
-                                            className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 rounded-[1.5rem] transition-all text-sm font-bold text-slate-900 dark:text-white"
-                                            value={formData.currentVersion}
-                                            onChange={e => setFormData({ ...formData, currentVersion: e.target.value })}
-                                        />
+                                            className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 rounded-[1.5rem] transition-all text-sm font-bold text-slate-900 dark:text-white appearance-none cursor-pointer"
+                                            value={formData.category}
+                                            onChange={e => setFormData({ ...formData, category: e.target.value })}
+                                        >
+                                            <option value="" disabled>Select Type</option>
+                                            {PREDEFINED_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                                        </select>
+                                        <Filter className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Effective Date</label>
-                                        <div className="relative">
-                                            <input
-                                                required
-                                                type="date"
-                                                className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 rounded-[1.5rem] transition-all text-sm font-bold text-slate-900 dark:text-white"
-                                                value={formData.effectiveDate}
-                                                onChange={e => setFormData({ ...formData, effectiveDate: e.target.value })}
-                                            />
-                                            <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
-                                        </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Lifecycle Status</label>
-                                        <div className="relative">
-                                            <select
-                                                className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 rounded-[1.5rem] transition-all text-sm font-bold cursor-pointer text-slate-900 dark:text-white appearance-none"
-                                                value={formData.status}
-                                                onChange={e => setFormData({ ...formData, status: e.target.value })}
-                                            >
-                                                <option value="Draft">Draft</option>
-                                                <option value="Active">Active</option>
-                                                <option value="Obsolete">Obsolete</option>
-                                            </select>
-                                            <Activity className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
-                                        </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Effective Date</label>
+                                    <div className="relative">
+                                        <input
+                                            required
+                                            type="date"
+                                            className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 rounded-[1.5rem] transition-all text-sm font-bold text-slate-900 dark:text-white"
+                                            value={formData.effectiveDate}
+                                            onChange={e => setFormData({ ...formData, effectiveDate: e.target.value })}
+                                        />
+                                        <Clock className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
                                     </div>
                                 </div>
 

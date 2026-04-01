@@ -201,53 +201,15 @@ const TaskManagement = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-3 items-center">
-                    <div className="flex bg-slate-950/50 p-1 rounded-2xl border border-slate-800/50">
-                        <select
-                            value={statusFilter}
-                            onChange={(e) => setStatusFilter(e.target.value)}
-                            className="bg-transparent text-[10px] font-black uppercase tracking-widest px-4 py-2 border-none focus:ring-0 text-slate-400 cursor-pointer hover:text-white transition-colors"
-                        >
-                            <option value="All">All Status</option>
-                            <option value="Pending">Pending Authorization</option>
-                            <option value="In Progress">Field Operations</option>
-                            <option value="Submitted">Intelligence Uploaded</option>
-                            <option value="Completed">Target Neutralized</option>
-                        </select>
-                        <div className="w-px bg-slate-800 my-2"></div>
-                        <select
-                            value={threatFilter}
-                            onChange={(e) => setThreatFilter(e.target.value)}
-                            className="bg-transparent text-[10px] font-black uppercase tracking-widest px-4 py-2 border-none focus:ring-0 text-slate-400 cursor-pointer hover:text-white transition-colors"
-                        >
-                            <option value="All">All Threat Levels</option>
-                            <option value="High">High Threat</option>
-                            <option value="Medium">Medium Priority</option>
-                            <option value="Low">Low Risk</option>
-                        </select>
-                    </div>
-
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => {
-                            resetForm();
-                            setShowModal(true);
-                        }}
-                        className="bg-blue-600 hover:bg-slate-900 text-white px-8 py-4 rounded-[1.5rem] font-black uppercase text-[10px] tracking-[0.2em] shadow-xl shadow-blue-500/20 transition-all flex items-center gap-3"
-                    >
-                        <Plus size={20} />
-                        Strategic Launch
-                    </motion.button>
+                    {/* Filters and Strategic Launch button removed per request */}
                 </div>
             </motion.div>
 
             {/* Tactical Intelligence Summary */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
-                    { label: 'Active Protocols', val: missions.length, color: 'from-blue-500 to-indigo-600' },
-                    { label: 'Pending Auth', val: missions.filter(t => t.missionStatus === 'Pending').length, color: 'from-indigo-500 to-purple-600' },
-                    { label: 'Field Ops', val: missions.filter(t => t.missionStatus === 'In Progress').length, color: 'from-blue-400 to-cyan-500' },
-                    { label: 'Neutralized', val: missions.filter(t => t.missionStatus === 'Completed').length, color: 'from-emerald-400 to-teal-500' }
+                    { label: 'Total Missions', val: missions.length, color: 'from-blue-500 to-indigo-600' },
+                    { label: 'Active Missions', val: missions.filter(t => t.missionStatus !== 'Completed').length, color: 'from-indigo-500 to-purple-600' }
                 ].map((stat, i) => (
                     <motion.div
                         key={i}
@@ -270,8 +232,6 @@ const TaskManagement = () => {
                             <tr>
                                 <th className="px-8 py-6 text-left text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Objective</th>
                                 <th className="px-8 py-6 text-left text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Assigned Specialist</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Threat</th>
-                                <th className="px-8 py-6 text-left text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Status</th>
                                 <th className="px-8 py-6 text-left text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Deadline</th>
                                 <th className="px-8 py-6 text-right text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Override</th>
                             </tr>
@@ -310,19 +270,6 @@ const TaskManagement = () => {
                                                     <span className="text-xs font-black text-slate-300 uppercase tracking-wide">{mission.assignedSpecialist?.name}</span>
                                                     <span className="text-[10px] text-slate-500 font-bold">{mission.assignedSpecialist?.role}</span>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-8 py-6">
-                                            <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-solid ${getThreatColor(mission.threatLevel)}`}>
-                                                {mission.threatLevel}
-                                            </span>
-                                        </td>
-                                        <td className="px-8 py-6">
-                                            <div className="flex items-center gap-3">
-                                                <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-solid flex items-center gap-2 ${getStatusColor(mission.missionStatus)}`}>
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span>
-                                                    {mission.missionStatus}
-                                                </span>
                                             </div>
                                         </td>
                                         <td className="px-8 py-6">

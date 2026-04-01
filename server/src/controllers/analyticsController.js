@@ -4,6 +4,7 @@ const Regulation = require('../models/Regulation');
 const Audit = require('../models/Audit');
 const Risk = require('../models/Risk');
 const ActivityLog = require('../models/ActivityLog');
+const Mission = require('../models/Mission');
 
 const analyticsController = {
     // Get overview stats for admin dashboard
@@ -11,24 +12,35 @@ const analyticsController = {
         try {
             const [
                 totalUsers,
-                activeTasks,
-                completedTasks,
-                totalRegulations
+                totalRegulations,
+                activeTasksCount,
+                completedTasksCount,
+                activeMissionsCount,
+                completedMissionsCount,
+                approvedTasksCount,
+                totalTasksCount,
+                totalMissionsCount
             ] = await Promise.all([
-                User.countDocuments({ isActive: true }),
-                Task.countDocuments({ status: { $in: ['Pending', 'In Progress'] } }),
-                Task.countDocuments({ status: 'Completed' }),
-                Regulation.countDocuments({ status: 'Active' })
+                User.countDocuments({ isActive: { $ne: false } }),
+                Regulation.countDocuments({ status: 'Active' }),
+                Task.countDocuments({ status: { $in: ['Pending', 'In Progress', 'Submitted', 'Under Review'] } }),
+                Task.countDocuments({ status: { $in: ['Completed', 'Approved'] } }),
+                Mission.countDocuments({ missionStatus: { $in: ['Pending', 'In Progress', 'Submitted'] } }),
+                Mission.countDocuments({ missionStatus: 'Completed' }),
+                Task.countDocuments({ status: 'Approved' }),
+                Task.countDocuments(),
+                Mission.countDocuments()
             ]);
 
-            // Calculate compliance score (Approved tasks / total tasks)
-            const [approvedTasks, totalTasks] = await Promise.all([
-                Task.countDocuments({ auditStatus: 'Approved' }),
-                Task.countDocuments()
-            ]);
+            const activeTasks = activeTasksCount + activeMissionsCount;
+            const completedTasks = completedTasksCount + completedMissionsCount;
 
-            const complianceScore = totalTasks > 0
-                ? ((approvedTasks / totalTasks) * 100).toFixed(1)
+            // Calculate compliance score
+            const totalWork = totalTasksCount + totalMissionsCount;
+            const approvedWork = approvedTasksCount + completedMissionsCount;
+
+            const complianceScore = totalWork > 0
+                ? ((approvedWork / totalWork) * 100).toFixed(1)
                 : 0;
 
             res.json({
@@ -63,25 +75,29 @@ const analyticsController = {
             const startDate = new Date();
             startDate.setDate(startDate.getDate() - parseInt(days));
 
-            const tasks = await Task.find({
-                createdAt: { $gte: startDate }
-            }).select('status createdAt completedAt');
+            const [tasks, missions] = await Promise.all([
+                Task.find({ createdAt: { $gte: startDate } }).select('status createdAt'),
+                Mission.find({ createdAt: { $gte: startDate } }).select('missionStatus createdAt')
+            ]);
 
             // Group by day and calculate completion rate
             const dailyStats = {};
 
             tasks.forEach(task => {
                 const date = task.createdAt.toISOString().split('T')[0];
-                if (!dailyStats[date]) {
-                    dailyStats[date] = { total: 0, completed: 0 };
-                }
+                if (!dailyStats[date]) dailyStats[date] = { total: 0, completed: 0 };
                 dailyStats[date].total++;
-                if (task.status === 'Completed') {
-                    dailyStats[date].completed++;
-                }
+                if (['Completed', 'Approved'].includes(task.status)) dailyStats[date].completed++;
             });
 
-            const chartData = Object.keys(dailyStats).map(date => ({
+            missions.forEach(mission => {
+                const date = mission.createdAt.toISOString().split('T')[0];
+                if (!dailyStats[date]) dailyStats[date] = { total: 0, completed: 0 };
+                dailyStats[date].total++;
+                if (mission.missionStatus === 'Completed') dailyStats[date].completed++;
+            });
+
+            const chartData = Object.keys(dailyStats).sort().map(date => ({
                 date,
                 score: ((dailyStats[date].completed / dailyStats[date].total) * 100).toFixed(1),
                 completed: dailyStats[date].completed,
@@ -104,13 +120,9 @@ const analyticsController = {
     // Get task completion statistics
     getTaskCompletion: async (req, res) => {
         try {
-            const stats = await Task.aggregate([
-                {
-                    $group: {
-                        _id: '$status',
-                        count: { $sum: 1 }
-                    }
-                }
+            const [taskStats, missionStats] = await Promise.all([
+                Task.aggregate([{ $group: { _id: '$status', count: { $sum: 1 } } }]),
+                Mission.aggregate([{ $group: { _id: '$missionStatus', count: { $sum: 1 } } }])
             ]);
 
             const formattedStats = {
@@ -120,17 +132,32 @@ const analyticsController = {
                 overdue: 0
             };
 
-            stats.forEach(stat => {
-                if (stat._id === 'Pending') formattedStats.pending = stat.count;
-                if (stat._id === 'In Progress') formattedStats.inProgress = stat.count;
-                if (stat._id === 'Completed') formattedStats.completed = stat.count;
+            taskStats.forEach(stat => {
+                if (stat._id === 'Pending') formattedStats.pending += stat.count;
+                if (stat._id === 'In Progress') formattedStats.inProgress += stat.count;
+                if (['Completed', 'Approved'].includes(stat._id)) formattedStats.completed += stat.count;
+            });
+
+            missionStats.forEach(stat => {
+                if (stat._id === 'Pending') formattedStats.pending += stat.count;
+                if (stat._id === 'In Progress') formattedStats.inProgress += stat.count;
+                if (stat._id === 'Submitted') formattedStats.inProgress += stat.count;
+                if (stat._id === 'Completed') formattedStats.completed += stat.count;
             });
 
             // Count overdue tasks
-            formattedStats.overdue = await Task.countDocuments({
-                status: { $ne: 'Completed' },
+            const overdueTasks = await Task.countDocuments({
+                status: { $nin: ['Completed', 'Approved'] },
                 dueDate: { $lt: new Date() }
             });
+
+            // Note: Missions don't have a clear overdue field but we could check deadline
+            const overdueMissions = await Mission.countDocuments({
+                missionStatus: { $ne: 'Completed' },
+                deadline: { $lt: new Date() }
+            });
+
+            formattedStats.overdue = overdueTasks + overdueMissions;
 
             res.json({
                 success: true,
@@ -148,7 +175,8 @@ const analyticsController = {
     // Get department-wise statistics
     getDepartmentStats: async (req, res) => {
         try {
-            const stats = await Task.aggregate([
+            // 1. Get Task Stats by Department
+            const taskStats = await Task.aggregate([
                 {
                     $lookup: {
                         from: 'users',
@@ -157,34 +185,69 @@ const analyticsController = {
                         as: 'assignee'
                     }
                 },
-                { $unwind: '$assignee' },
+                { $unwind: { path: '$assignee', preserveNullAndEmptyArrays: false } },
                 {
                     $group: {
                         _id: '$assignee.department',
                         total: { $sum: 1 },
                         completed: {
-                            $sum: { $cond: [{ $eq: ['$status', 'Completed'] }, 1, 0] }
-                        }
-                    }
-                },
-                {
-                    $project: {
-                        department: '$_id',
-                        total: 1,
-                        completed: 1,
-                        completionRate: {
-                            $multiply: [
-                                { $divide: ['$completed', '$total'] },
-                                100
-                            ]
+                            $sum: { $cond: [{ $in: ['$status', ['Completed', 'Approved']] }, 1, 0] }
                         }
                     }
                 }
             ]);
 
+            // 2. Get Mission Stats by Department (Match by specialist name)
+            const missionStats = await Mission.aggregate([
+                {
+                    $lookup: {
+                        from: 'users',
+                        localField: 'assignedSpecialist.name',
+                        foreignField: 'name',
+                        as: 'assignee'
+                    }
+                },
+                { $unwind: { path: '$assignee', preserveNullAndEmptyArrays: false } },
+                {
+                    $group: {
+                        _id: '$assignee.department',
+                        total: { $sum: 1 },
+                        completed: {
+                            $sum: { $cond: [{ $eq: ['$missionStatus', 'Completed'] }, 1, 0] }
+                        }
+                    }
+                }
+            ]);
+
+            // 3. Combine Stats
+            const combined = {};
+            
+            taskStats.forEach(s => {
+                const dept = s._id || 'General';
+                if (!combined[dept]) combined[dept] = { total: 0, completed: 0 };
+                combined[dept].total += s.total;
+                combined[dept].completed += s.completed;
+            });
+
+            missionStats.forEach(s => {
+                const dept = s._id || 'General';
+                if (!combined[dept]) combined[dept] = { total: 0, completed: 0 };
+                combined[dept].total += s.total;
+                combined[dept].completed += s.completed;
+            });
+
+            const finalStats = Object.keys(combined).map(dept => ({
+                department: dept,
+                total: combined[dept].total,
+                completed: combined[dept].completed,
+                completionRate: combined[dept].total > 0 
+                    ? Math.round((combined[dept].completed / combined[dept].total) * 100)
+                    : 0
+            }));
+
             res.json({
                 success: true,
-                data: stats
+                data: finalStats
             });
         } catch (error) {
             console.error('Department stats error:', error);

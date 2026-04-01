@@ -10,7 +10,7 @@ const {
 const { protect, authorize } = require('../middleware/authMiddleware');
 
 router.use(protect);
-router.use(authorize('Admin'));
+router.use(authorize('Admin', 'Compliance Officer', 'Auditor'));
 
 router.route('/')
     .get(getUsers)

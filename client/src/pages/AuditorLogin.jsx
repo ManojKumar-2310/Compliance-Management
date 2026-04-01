@@ -40,7 +40,7 @@ const AuditorLogin = () => {
             }
 
             toast.success('Welcome back, Auditor!');
-            setTimeout(() => navigate('/dashboard'), 500);
+            setTimeout(() => navigate('/auditor/mission-control'), 500);
         } catch (err) {
             const errorMsg = err.response?.data?.message || err.message || 'Login failed';
             setError(errorMsg);
@@ -146,6 +146,9 @@ const AuditorLogin = () => {
                                     type="text"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    readOnly
+                                    onFocus={(e) => e.target.removeAttribute('readonly')}
+                                    autoComplete="new-password"
                                     className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 pl-14 rounded-[1.5rem] focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500/50 text-slate-900 dark:text-white font-bold transition-all outline-none"
                                     placeholder="auditor@compliance.pro"
                                     required
@@ -161,6 +164,9 @@ const AuditorLogin = () => {
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    readOnly
+                                    onFocus={(e) => e.target.removeAttribute('readonly')}
+                                    autoComplete="new-password"
                                     className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-5 pl-14 rounded-[1.5rem] focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500/50 text-slate-900 dark:text-white font-bold transition-all outline-none"
                                     placeholder="••••••••"
                                     required

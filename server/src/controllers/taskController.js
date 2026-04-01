@@ -7,8 +7,8 @@ const User = require('../models/User');
 const getTasks = async (req, res) => {
     try {
         let query = { ...req.query };
-        // Emplooyees only see their tasks
-        if (req.user.role === 'Employee') {
+        // Employees only see their tasks
+        if (req.user?.role?.toLowerCase() === 'employee') {
             query.assignedTo = req.user._id;
         }
 
@@ -94,7 +94,7 @@ const updateTask = async (req, res) => {
         // Check if assignedTo exists to prevent crash
         const assignedToId = task.assignedTo ? task.assignedTo.toString() : null;
         const isAssignee = assignedToId && req.user._id.toString() === assignedToId;
-        const isAuthorizedRole = ['Admin', 'Compliance Officer', 'Auditor', 'Manager'].includes(req.user.role);
+        const isAuthorizedRole = ['admin', 'compliance officer', 'auditor', 'manager'].includes(req.user?.role?.toLowerCase());
 
         if (!isAssignee && !isAuthorizedRole) {
             return res.status(403).json({ message: 'Not authorized to modify this task' });

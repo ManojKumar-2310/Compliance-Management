@@ -120,12 +120,10 @@ const UserManagement = () => {
             </div>
 
             {/* Stats HUD */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
                     { label: 'Total Personnel', value: users.length, icon: Users, color: 'blue' },
-                    { label: 'Active Specialists', value: users.filter(u => u.isActive).length, icon: Activity, color: 'emerald' },
-                    { label: 'Executive Admin', value: users.filter(u => u.role === 'Admin').length, icon: ShieldCheck, color: 'purple' },
-                    { label: 'Field Units', value: users.filter(u => u.role === 'Employee').length, icon: UserPlus, color: 'indigo' }
+                    { label: 'Active Specialists', value: users.filter(u => u.isActive).length, icon: Activity, color: 'emerald' }
                 ].map((stat, i) => (
                     <motion.div
                         key={i}
@@ -309,10 +307,10 @@ const UserManagement = () => {
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Authority Level</label>
                                         <select name="role" defaultValue={selectedUser?.role || 'Employee'} className="w-full px-5 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500/50 transition-all text-sm font-bold cursor-pointer text-white">
-                                            <option value="Admin">Admin</option>
                                             <option value="Employee">Employee</option>
                                             <option value="Auditor">Auditor</option>
                                             <option value="Manager">Manager</option>
+                                            <option value="Compliance Officer">Compliance Officer</option>
                                         </select>
                                     </div>
                                     <div className="space-y-2">

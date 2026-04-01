@@ -132,6 +132,9 @@ const Login = () => {
                                             type="text" // Allow email or username
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
+                                            readOnly
+                                            onFocus={(e) => e.target.removeAttribute('readonly')}
+                                            autoComplete="new-password"
                                             className="w-full bg-slate-50 dark:bg-black/50 border-2 border-slate-100 dark:border-white/10 p-5 pl-14 rounded-[1.5rem] focus:bg-white dark:focus:bg-black focus:border-blue-500 text-slate-900 dark:text-white font-bold transition-all outline-none placeholder:text-slate-400 group-hover:border-slate-200 dark:group-hover:border-white/20"
                                             placeholder="user@nexus.com"
                                             required
@@ -147,6 +150,9 @@ const Login = () => {
                                             type="password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
+                                            readOnly
+                                            onFocus={(e) => e.target.removeAttribute('readonly')}
+                                            autoComplete="new-password"
                                             className="w-full bg-slate-50 dark:bg-black/50 border-2 border-slate-100 dark:border-white/10 p-5 pl-14 rounded-[1.5rem] focus:bg-white dark:focus:bg-black focus:border-blue-500 text-slate-900 dark:text-white font-bold transition-all outline-none placeholder:text-slate-400 group-hover:border-slate-200 dark:group-hover:border-white/20"
                                             placeholder="••••••••"
                                             required

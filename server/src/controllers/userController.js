@@ -5,26 +5,24 @@ const User = require('../models/User');
 // @access  Private/Admin
 const getUsers = async (req, res) => {
     try {
-        const users = await User.aggregate([
-            {
-                $lookup: {
-                    from: 'missions',
-                    localField: 'name',
-                    foreignField: 'assignedSpecialist.name',
-                    as: 'assignedMissions'
-                }
-            },
-            {
-                $project: {
-                    password: 0
-                }
-            },
-            {
-                $sort: { createdAt: -1 }
-            }
-        ]);
-        res.json(users);
+        const users = await User.find().select('-password').sort({ createdAt: -1 }).lean();
+        
+        const mongoose = require('mongoose');
+        const Mission = mongoose.models.Mission || require('../models/Mission');
+        
+        const missions = await Mission.find().lean();
+        
+        const enhancedUsers = users.map(user => {
+            const userMissions = missions.filter(m => m.assignedSpecialist && m.assignedSpecialist.name === user.name);
+            return {
+                ...user,
+                assignedMissions: userMissions
+            };
+        });
+
+        res.json(enhancedUsers);
     } catch (error) {
+        console.error('getUsers error:', error);
         res.status(500).json({ message: error.message });
     }
 };

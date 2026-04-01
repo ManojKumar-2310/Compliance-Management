@@ -10,7 +10,8 @@ const startCronJobs = () => {
             const now = new Date();
             const result = await Task.updateMany(
                 {
-                    status: { $ne: 'Completed' },
+                    // Exclude ALL terminal statuses — Approved/Rejected tasks must never be overwritten
+                    status: { $nin: ['Completed', 'Approved', 'Rejected'] },
                     dueDate: { $lt: now }
                 },
                 { $set: { status: 'Overdue' } }

@@ -18,6 +18,6 @@ router.route('/')
 router.route('/:id')
     .get(getTaskById)
     .put(updateTask) // Logic inside controller handles granular permissions
-    .delete(authorize('Admin', 'Manager'), deleteTask);
+    .delete(authorize('Admin', 'Manager', 'Compliance Officer'), deleteTask);
 
 module.exports = router;

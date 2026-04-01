@@ -90,7 +90,11 @@ const seedData = async () => {
                 email: email,
                 password: password,
                 role: role,
-                department: i < 10 ? 'IT' : i < 20 ? 'Operations' : i < 30 ? 'Finance' : 'HR',
+                department: [
+                    'Healthcare / Medical', 'Education', 'Banking', 'Finance', 'Insurance',
+                    'Information Technology (IT)', 'Software Companies', 'Manufacturing',
+                    'Pharmaceutical', 'Construction'
+                ][Math.floor(i / 4)],
                 designation: desig,
                 isActive: true
             };

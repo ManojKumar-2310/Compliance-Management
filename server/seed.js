@@ -30,8 +30,7 @@ const seedDatabase = async () => {
         ]);
         console.log('✅ Created 5 departments');
 
-        // Hash password
-        const hashedPassword = await bcrypt.hash('manoj@123', 10);
+        // Note: Password hashing is handled by User model pre-save hook
 
         // Create Users
         const users = await User.insertMany([
@@ -39,7 +38,7 @@ const seedDatabase = async () => {
             {
                 name: 'Manoj Admin',
                 email: 'cheran@123',
-                password: await bcrypt.hash('cheran', 10),
+                password: 'cheran',
                 role: 'Admin',
                 department: departments[0]._id,
                 isActive: true
@@ -48,7 +47,7 @@ const seedDatabase = async () => {
             {
                 name: 'John Smith',
                 email: 'employee@example.com',
-                password: hashedPassword,
+                password: 'manoj@123',
                 role: 'Employee',
                 department: departments[1]._id,
                 isActive: true
@@ -56,7 +55,7 @@ const seedDatabase = async () => {
             {
                 name: 'Sarah Johnson',
                 email: 'sarah@example.com',
-                password: hashedPassword,
+                password: 'manoj@123',
                 role: 'Employee',
                 department: departments[2]._id,
                 isActive: true
@@ -64,7 +63,7 @@ const seedDatabase = async () => {
             {
                 name: 'Michael Brown',
                 email: 'michael@example.com',
-                password: hashedPassword,
+                password: 'manoj@123',
                 role: 'Employee',
                 department: departments[3]._id,
                 isActive: true
@@ -72,8 +71,8 @@ const seedDatabase = async () => {
             // Auditor
             {
                 name: 'Jane Auditor',
-                email: 'auditor@example.com',
-                password: hashedPassword,
+                email: 'auditor@123',
+                password: 'auditor',
                 role: 'Auditor',
                 department: departments[4]._id,
                 isActive: true
@@ -214,8 +213,8 @@ const seedDatabase = async () => {
         console.log('  Email: michael@example.com (Michael Brown)');
         console.log('  Password: password123\n');
         console.log('Auditor:');
-        console.log('  Email: auditor@example.com');
-        console.log('  Password: password123');
+        console.log('  Email: auditor@123');
+        console.log('  Password: auditor');
         console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
 
         await mongoose.disconnect();
