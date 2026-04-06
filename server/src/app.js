@@ -11,24 +11,36 @@ const app = express();
 app.use(helmet());
 
 // CORS Configuration
+const allowedOrigins = [
+    process.env.CLIENT_URL,
+    'https://complaince-management-tool.netlify.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+].filter(Boolean);
+
 const corsOptions = {
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
 
-        // Allow any localhost origin for development
-        if (process.env.NODE_ENV === 'development' && origin.includes('localhost')) {
+        // Normalize origin and allowedOrigins for comparison (remove trailing slashes)
+        const normalizedOrigin = origin.replace(/\/$/, "");
+        
+        const isAllowed = allowedOrigins.some(allowedOrigin => {
+            if (!allowedOrigin) return false;
+            return allowedOrigin.replace(/\/$/, "") === normalizedOrigin;
+        });
+
+        if (isAllowed || (process.env.NODE_ENV === 'development' && origin.includes('localhost'))) {
             return callback(null, true);
         }
 
-        // Allow specific origin
-        if (origin === (process.env.CLIENT_URL || 'http://localhost:5173')) {
-            return callback(null, true);
-        }
-
+        console.error(`CORS Blocked for origin: ${origin}. Allowed origins: ${allowedOrigins.join(', ')}`);
         return callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
