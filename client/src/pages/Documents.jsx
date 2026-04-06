@@ -179,7 +179,7 @@ const Documents = () => {
                                 
                                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <a
-                                        href={`http://localhost:5000/${doc.path}`}
+                                        href={`${import.meta.env.VITE_SERVER_URL || 'http://localhost:5000'}/${doc.path}`}
                                         target="_blank"
                                         rel="noreferrer"
                                         className="p-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:scale-110 transition-transform"
