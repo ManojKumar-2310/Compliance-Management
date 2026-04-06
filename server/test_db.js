@@ -1,16 +1,28 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+const dotenv = require('dotenv');
+const dns = require('dns');
 
-const testConnection = async () => {
-    try {
-        console.log('Connecting to:', process.env.MONGO_URI);
-        await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 5000 });
-        console.log('✅ Connection Successful');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+dotenv.config();
+
+const MONGO_URI = process.env.MONGO_URI;
+
+console.log('Testing connection to:', MONGO_URI);
+
+mongoose.connect(MONGO_URI)
+    .then(() => {
+        console.log('SUCCESS: Connected to MongoDB');
         process.exit(0);
-    } catch (error) {
-        console.error('❌ Connection Failed:', error.message);
+    })
+    .catch((err) => {
+        console.error('FAILURE: MongoDB connection error');
+        console.error('Name:', err.name);
+        console.error('Message:', err.message);
         process.exit(1);
-    }
-};
+    });
 
-testConnection();
+// Timeout after 15 seconds
+setTimeout(() => {
+    console.error('TIMEOUT: Connection took too long');
+    process.exit(1);
+}, 15000);
